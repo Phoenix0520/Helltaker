@@ -561,6 +561,7 @@ void SceneManager::RenderChapterDisplay()
 						break;
 					}
 
+					// 각 오브젝트 번호
 					DirectWrite::RenderText(str, position, color.x, color.y, color.z, 20.0f);
 
 					wstring str2 = to_wstring(x) + to_wstring(y);
