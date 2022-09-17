@@ -1,0 +1,179 @@
+#include "framework.h"
+#include "Audio.h"
+#include "HS01_IntroScene.h"
+
+CAudio::CAudio()
+	: count(40)
+	, volume(1.0f)
+{
+	System_Create(&system);
+
+	system->init(count, FMOD_INIT_NORMAL, NULL);
+
+	sound = new Sound*[count];
+	channel = new Channel*[count];
+
+	ZeroMemory(sound, sizeof(Sound*) * count);
+	ZeroMemory(channel, sizeof(Channel*) * count);
+
+
+}
+
+CAudio::~CAudio()
+{
+	if (channel != NULL)
+	{
+		for (UINT i = 0; i < count; i++)
+			if (channel[i]) channel[i]->stop();
+	}
+
+	if (sound != NULL)
+	{
+		for (UINT i = 0; i < count; i++)
+			if (sound[i]) sound[i]->release();
+	}
+
+	for (UINT i = 0; i < count; i++)
+		SAFE_DELETE(channel[i]);
+	for (UINT i = 0; i < count; i++)
+		SAFE_DELETE(sound[i]);
+
+	if (system != NULL)
+	{
+		system->release();
+		system->close();
+	}
+
+	sounds.clear();
+}
+
+void CAudio::Update()
+{
+	if (scene == nullptr)
+		scene = (HS01_IntroScene*)SCENEMANAGER->GetScene("HS01_IntroScene");
+
+	system->update();
+}
+
+void CAudio::AddSound(string name, string file, bool bLoop)
+{
+	if (scene == nullptr)
+		scene = (HS01_IntroScene*)SCENEMANAGER->GetScene("HS01_IntroScene");
+
+	if (scene)
+		scene->AddLoadVal();
+
+	if (bLoop == true)
+		system->createStream(file.c_str(), FMOD_LOOP_NORMAL, NULL, &sound[sounds.size()]);
+	else
+		system->createStream(file.c_str(), FMOD_DEFAULT, NULL, &sound[sounds.size()]);
+
+	sounds[name] = &sound[sounds.size()];
+}
+
+void CAudio::Play(string name, float volume)
+{
+	int count = 0;
+	iter = sounds.begin();
+	for (iter; iter != sounds.end(); iter++, count++)
+	{
+		if (name == iter->first)
+		{
+			cout << name << " Àç»ýµÊ" << endl;
+			system->playSound(FMOD_CHANNEL_FREE, *iter->second, false, &channel[count]);
+			channel[count]->setVolume(volume);
+			break;
+		}
+	}
+}
+
+void CAudio::Stop(string name)
+{
+	int count = 0;
+	iter = sounds.begin();
+	for (iter; iter != sounds.end(); iter++, count++)
+	{
+		if (name == iter->first)
+		{
+			channel[count]->stop();
+			break;
+		}
+	}
+}
+
+void CAudio::Pause(string name)
+{
+	int count = 0;
+	iter = sounds.begin();
+	for (iter; iter != sounds.end(); iter++, count++)
+	{
+		if (name == iter->first)
+		{
+			channel[count]->setPaused(true);
+			break;
+		}
+	}
+}
+
+void CAudio::Resume(string name)
+{
+	int count = 0;
+	iter = sounds.begin();
+	for (iter; iter != sounds.end(); iter++, count++)
+	{
+		if (name == iter->first)
+		{
+			channel[count]->setPaused(false);
+			channel[count]->setVolume(bgmSize);
+			break;
+		}
+	}
+}
+
+bool CAudio::Playing(string name)
+{
+	bool bPlay = false;
+	int count = 0;
+	iter = sounds.begin();
+	for (iter; iter != sounds.end(); iter++, count++)
+	{
+		if (name == iter->first)
+		{
+			channel[count]->isPlaying(&bPlay);
+			break;
+		}
+	}
+
+	return bPlay;
+}
+
+bool CAudio::Paused(string name)
+{
+	bool bPaused = false;
+	int count = 0;
+	iter = sounds.begin();
+	for (iter; iter != sounds.end(); iter++, count++)
+	{
+		if (name == iter->first)
+		{
+			channel[count]->getPaused(&bPaused);
+			break;
+		}
+	}
+
+	return bPaused;
+}
+
+void CAudio::Volume(string name, float volume)
+{
+	int count = 0;
+	iter = sounds.begin();
+	for (iter; iter != sounds.end(); iter++, count++)
+	{
+		if (name == iter->first)
+		{
+			channel[count]->setVolume(volume);
+			break;
+		}
+	}
+}
