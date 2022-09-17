@@ -330,10 +330,10 @@ void HS01_IntroScene::Render()
 			switch (loadLevel)
 			{
 			case 1:
-				str = L"스테이지 생성중 (" + to_wstring(loadVal) + L" / 21)";
+				str = L"스테이지 생성중 (" + to_wstring(loadVal) + L" / 19)";
 				break;
 			case 2:
-				str = L"오브젝트 생성중 (" + to_wstring(loadVal) + L" / 102)";
+				str = L"오브젝트 생성중 (" + to_wstring(loadVal) + L" / 83)";
 				break;
 			case 3:
 				str = L"음원 등록중 (" + to_wstring(loadVal) + L" / 28)";

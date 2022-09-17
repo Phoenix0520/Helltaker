@@ -133,40 +133,60 @@ void SceneManager::ThreadStart1()
 
 	scenes.push_back(new HS00_DeadScene());
 	scene->AddLoadVal();
+	
 	scenes.push_back(new HS02_Prologue());
 	scene->AddLoadVal();
+	
 	scenes.push_back(new HS03_ChangeScene());
-	scene->AddLoadVal();
+	scene->AddLoadVal(); 
+	
 	scenes.push_back(new HS04_Chapter01());
 	scene->AddLoadVal();
+	
 	scenes.push_back(new HS05_Dialogue());
-	scene->AddLoadVal();
+	scene->AddLoadVal(); 
+
+	scene->AddLoadLevel();
+
 	scenes.push_back(new HS06_Chapter02());
 	scene->AddLoadVal();
+	
 	scenes.push_back(new HS07_Chapter03());
 	scene->AddLoadVal();
+	
 	scenes.push_back(new HS08_Chapter04());
-	scene->AddLoadVal();
+	scene->AddLoadVal(); 
+	
 	scenes.push_back(new HS09_SlateScene());
-	scene->AddLoadVal();
+	scene->AddLoadVal(); 
+	
 	scenes.push_back(new HS10_Chapter05());
 	scene->AddLoadVal();
+	
 	scenes.push_back(new HS11_Chapter06());
 	scene->AddLoadVal();
+	
 	scenes.push_back(new HS12_HeavenScene());
 	scene->AddLoadVal();
+	
 	scenes.push_back(new HS13_Chapter07());
 	scene->AddLoadVal();
+	
 	scenes.push_back(new HS14_Chapter08());
 	scene->AddLoadVal();
+	
 	scenes.push_back(new HS15_Chapter09());
 	scene->AddLoadVal();
+	
 	scenes.push_back(new HS16_JudgeScene());
 	scene->AddLoadVal();
+	
 	scenes.push_back(new HS17_BossScene());
 	scene->AddLoadVal();
+	
 	scenes.push_back(new HS19_MapEditor());
 	scene->AddLoadVal();
+	
 
 	scene->AddLoadLevel();
 }
@@ -243,24 +263,28 @@ void SceneManager::CreateObject()
 	{
 		Helltaker* helltaker = new Helltaker();
 		OBJMANAGER->AddObject("Helltaker", helltaker);
+		scene->AddLoadVal();
 	}
 
 	// LoveSign
 	{
 		LoveSign* sign = new LoveSign();
 		OBJMANAGER->AddObject("LoveSign", sign);
+		scene->AddLoadVal();
 	}
 
 	// StarEffect
 	{
 		Star* star = new Star();
 		OBJMANAGER->AddObject("Star", star);
+		scene->AddLoadVal();
 	}
 
 	// ClearEffect
 	{
 		Clear* clear = new Clear();
 		OBJMANAGER->AddObject("Clear", clear);
+		scene->AddLoadVal();
 	}
 
 	for (int i = 1; i <= 12; i++)
@@ -270,6 +294,7 @@ void SceneManager::CreateObject()
 		{
 			Mob* mob = new Mob();
 			OBJMANAGER->AddObject(str, mob);
+			scene->AddLoadVal();
 		}
 	}
 
@@ -281,6 +306,7 @@ void SceneManager::CreateObject()
 		{
 			Box* box = new Box();
 			OBJMANAGER->AddObject(str, box);
+			scene->AddLoadVal();
 		}
 	}
 
@@ -291,6 +317,7 @@ void SceneManager::CreateObject()
 		{
 			Goal* goal = new Goal(i);
 			OBJMANAGER->AddObject(str, goal);
+			scene->AddLoadVal();
 		}
 	}
 
@@ -301,6 +328,7 @@ void SceneManager::CreateObject()
 		{
 			Trap* trap = new Trap();
 			OBJMANAGER->AddObject(str, trap);
+			scene->AddLoadVal();
 		}
 	}
 
@@ -311,6 +339,7 @@ void SceneManager::CreateObject()
 		{
 			Key* key = new Key();
 			OBJMANAGER->AddObject(str, key);
+			scene->AddLoadVal();
 		}
 	}
 
@@ -321,6 +350,7 @@ void SceneManager::CreateObject()
 		{
 			LockBox* lbox = new LockBox();
 			OBJMANAGER->AddObject(str, lbox);
+			scene->AddLoadVal();
 		}
 	}
 
@@ -332,6 +362,7 @@ void SceneManager::CreateObject()
 		{
 			Fire* fire = new Fire();
 			OBJMANAGER->AddObject(str, fire);
+			scene->AddLoadVal();
 		}
 	}
 
@@ -342,10 +373,9 @@ void SceneManager::CreateObject()
 		{
 			Slate* obj = new Slate();
 			OBJMANAGER->AddObject(str, obj);
+			scene->AddLoadVal();
 		}
 	}
-
-	scene->AddLoadLevel();
 }
 
 Scene* SceneManager::GetScene(string name)

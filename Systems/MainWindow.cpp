@@ -13,8 +13,8 @@ ID3D11RenderTargetView* rtv = nullptr; // 실제 그려질 영역
 
 bool					visibleMap = false;
 bool					visibleCollider = false;
-float					bgmSize = 0.0f;
-float					sfxSize = 0.0f;
+float					bgmSize = 0.15f;
+float					sfxSize = 0.15f;
 
 MainWindow::MainWindow()
 {

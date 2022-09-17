@@ -60,12 +60,6 @@ void ObjectManager::RenderAll()
 
 void ObjectManager::AddObject(string name, GameObject * obj)
 {
-	if (scene == nullptr)
-		scene = (HS01_IntroScene*)SCENEMANAGER->GetScene("HS01_IntroScene");
-
-	if (scene)
-		scene->AddLoadVal();
-
 	objects.insert(make_pair(name, obj));
 }
 
