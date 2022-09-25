@@ -48,11 +48,6 @@ void Box::Reset()
 	if (textureID >= 8)
 		textureID = rand() % 8;
 
-	mt19937 engine((unsigned int)time(NULL));
-	uniform_int_distribution<int> distribution(1, 3);
-	auto generator = bind(distribution, engine);
-
-	soundID = generator();
 }
 
 void Box::MoveObject(Direction direction, Vector2 & position)
@@ -76,6 +71,17 @@ void Box::MoveObject(Direction direction, Vector2 & position)
 		break;
 	}
 
+	mt19937 engine((unsigned int)time(NULL));
+	uniform_int_distribution<int> distribution(1, 3);
+	auto generator = bind(distribution, engine);
+
+	soundID = generator();
+
+	string str = "BOXKICK" + to_string(soundID);
+
+	if (!ISPLAYING(str))
+		PLAYSOUND(str, sfxSize);
+
 	if (HTMAP->IsWall(pt.x, pt.y))
 		return;
 	else if (HTMAP->IsMob(pt.x, pt.y))
@@ -86,6 +92,8 @@ void Box::MoveObject(Direction direction, Vector2 & position)
 		return;
 	else
 	{
+		soundID = generator();
+
 		string str = "BOXMOVE" + to_string(soundID);
 
 		if (!ISPLAYING(str))

@@ -385,7 +385,7 @@ void OptionMenu::WinSetUpdate()
 					MAIN->SetWindowSize(resList[index].first, resList[index].second, true);
 					break;
 				case WINDOWED:
-					MAIN->SetWindowSize(resList[index].first, resList[index].second);
+					MAIN->SetWindowSize(resList[index].first, resList[index].second, false);
 					break;
 				}
 

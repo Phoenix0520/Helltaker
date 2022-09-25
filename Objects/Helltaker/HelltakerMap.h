@@ -70,8 +70,9 @@ public: // 전역함수
 	GameObject* GetSecondObject(int x, int y);
 	// Getter
 
-	void SetSize(int x, int y);
+	void SetSize(int x, int y, bool reset = true);
 	void SetValue(int x, int y, State state, GameObject* object);
+	void ReSetValue(int x, int y);
 	void ReSetValue(int x, int y, State state);
 	void SetOffset(float x, float y) { this->offset = Vector2(x, y); }
 	void SetOffset(Vector2 offset) { this->offset = offset; }
@@ -96,7 +97,7 @@ private: // 멤버변수
 	int sizeY = 0;
 	// map 의 크기
 
-	Vector2 offset		= Vector2(-400.0f, 375.0f); // 좌상단의 좌표
+	Vector2 offset		= Vector2(0.0f, 0.0f); // 좌상단의 좌표
 	Vector2 offsetSize	= Vector2(100.0f, 100.0f);	// 한 칸의 크기
 	// offset
 

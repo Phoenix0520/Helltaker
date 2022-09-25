@@ -234,6 +234,9 @@ void SceneManager::CreateObject()
 	ADDSOUND("BOXMOVE1", "./Sound/BoxMove1.wav", false);
 	ADDSOUND("BOXMOVE2", "./Sound/BoxMove2.wav", false);
 	ADDSOUND("BOXMOVE3", "./Sound/BoxMove3.wav", false);
+	ADDSOUND("BOXKICK1", "./Sound/BoxKick1.wav", false);
+	ADDSOUND("BOXKICK2", "./Sound/BoxKick2.wav", false);
+	ADDSOUND("BOXKICK3", "./Sound/BoxKick3.wav", false);
 
 	ADDSOUND("TRAP", "./Sound/Trap1.wav", false);
 

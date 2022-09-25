@@ -125,7 +125,7 @@ void ChapterButton::Update(Matrix V, Matrix P)
 					
 					break;
 				}
-					
+
 				SCENEMANAGER->ChangeScene(cScene->GetSceneName());
 			}
 		}

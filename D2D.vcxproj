@@ -105,6 +105,8 @@
     <ClInclude Include="Render\Graphic\DirectWrite.h" />
     <ClInclude Include="Base\Hard\GameTime.h" />
     <ClInclude Include="Systems\MainWindow.h" />
+    <ClInclude Include="Util\Convert.h" />
+    <ClInclude Include="Util\CSVReader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base\Hard\Audio.cpp">
@@ -185,6 +187,8 @@
     <ClCompile Include="Render\Graphic\DirectWrite.cpp" />
     <ClCompile Include="Base\Hard\GameTime.cpp" />
     <ClCompile Include="Systems\MainWindow.cpp" />
+    <ClCompile Include="Util\Convert.cpp" />
+    <ClCompile Include="Util\CSVReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\imgui.ini">
@@ -295,7 +299,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./;../;./Components;./Objects;./Objects/UI;./Objects/Design;./Objects/OptionMenu;./Objects/Basic;./Objects/Helltaker;./Resource;./Scenes;./Scenes/HTScene;./Scenes/Lesson;./Shader;./Systems;./Base;./Base/Hard;./Base/Soft;./Effects;./Render;./Render/Animation;./Render/Graphic;./Libraries;./Libraries/FMOD;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../;./Components;./Objects;./Objects/UI;./Objects/Design;./Objects/OptionMenu;./Objects/Basic;./Objects/Helltaker;./Resource;./Scenes;./Scenes/HTScene;./Scenes/Lesson;./Shader;./Systems;./Base;./Base/Hard;./Base/Soft;./Effects;./Render;./Render/Animation;./Render/Graphic;./Libraries;./Libraries/FMOD;./Util;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
     </ClCompile>

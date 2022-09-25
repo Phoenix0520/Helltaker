@@ -19,20 +19,30 @@ public:
 
 	void GUISetMap();
 	void GUIAddObj();
+	void GUISaveMap();
 
 	Vector2 GetOffset() { return offset; }
 
 private:
 	class Texture* background	= nullptr;	// 배경
-	class Texture* tempTexture	= nullptr;	// 미리보기 텍스쳐
 	class Texture* mapBG		= nullptr;  // 설정할 맵의 배경
-	class Texture* mapTile[100];			// 맵의 타일
 
-	class GameObject* obj[100];				// 맵에 넣을 오브젝트
+	vector<class Texture*> tempTexture; 	// 미리보기 텍스쳐
+	vector<class Texture*> mapTile;			// 맵의 타일
+	vector<class GameObject*> obj;			// 맵에 넣을 오브젝트
 
 	Vector2 offset = Vector2(0.0f, 0.0f);
-	int size[2] = { 0, 0 };
+	vector<vector<UINT>> mapObj;
+	vector<UINT> mapObjX;
+	vector<UINT> mapObjY;
 
+	bool init = false;
 	bool inserting = false;
+	bool deleting = false;
+	bool toggleTrap = false;
+	bool drag = false;
+
+	int combo = 0;
+	int chapter = 0;
 
 };

@@ -181,17 +181,20 @@ GameObject* HelltakerMap::GetSecondObject(int x, int y)
 }
 
 
-void HelltakerMap::SetSize(int x, int y)
+void HelltakerMap::SetSize(int x, int y, bool reset)
 {
 	Clear();
 	for (int i = 0; i < (x * y); i++)
 	{
-		HTMap* map = new HTMap;
-		map->state = wall;
-		map->gameObject = nullptr;
-		map->secondObject = nullptr;
+		if (reset)
+		{
+			HTMap* map = new HTMap;
+			map->state = wall;
+			map->gameObject = nullptr;
+			map->secondObject = nullptr;
 
-		maps.push_back(map);
+			maps.push_back(map);
+		}
 	}
 
 	sizeX = x;
@@ -235,6 +238,16 @@ void HelltakerMap::SetValue(int x, int y, State state, GameObject* object)
 	}
 
 	maps[id]->gameObject = object;
+}
+
+void HelltakerMap::ReSetValue(int x, int y)
+{
+	int id = sizeX * y + x;
+
+	State oldState = maps[id]->state;
+	maps[id]->state = wall;
+
+	maps[id]->gameObject = nullptr;
 }
 
 void HelltakerMap::ReSetValue(int x, int y, State state)

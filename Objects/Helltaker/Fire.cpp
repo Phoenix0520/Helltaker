@@ -101,6 +101,8 @@ void Fire::Render()
 
 void Fire::Reset()
 {
+	texture[0]->UpdateColorBuffer(0);
+	texture[1]->UpdateColorBuffer(0);
 }
 
 bool Fire::IsPlay()

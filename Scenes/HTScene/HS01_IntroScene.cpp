@@ -225,7 +225,12 @@ void HS01_IntroScene::Update()
 			buttonPos += 0.0166f * 1000.0f;
 
 			if (buttonPos > -319.9833f)
+			{
 				button1->SetHover(true);
+
+				for (UINT i = 0; i < 10; i++)
+					button[i]->SetHover(false);
+			}
 		}
 		else
 			buttonPos = -320.0f;
@@ -336,7 +341,7 @@ void HS01_IntroScene::Render()
 				str = L"오브젝트 생성중 (" + to_wstring(loadVal) + L" / 83)";
 				break;
 			case 3:
-				str = L"음원 등록중 (" + to_wstring(loadVal) + L" / 28)";
+				str = L"음원 등록중 (" + to_wstring(loadVal) + L" / 27)";
 				break;
 			}
 	

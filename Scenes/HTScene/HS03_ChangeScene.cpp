@@ -43,6 +43,10 @@ void HS03_ChangeScene::Update()
 	if (!animation->IsPlay()) // Rendering End
 	{
 		SCENEMANAGER->ChangeScene(nextSceneName);
+
+		if (!ISPLAYING("MAINBGM"))
+			PLAYSOUND("MAINBGM", bgmSize);
+
 		CAMERA->SetPosition(Vector2(0.0f, 0.0f));
 		return;
 	}
@@ -58,6 +62,7 @@ void HS03_ChangeScene::Render()
 void HS03_ChangeScene::ChangeScene()
 {
 	STOPSOUND("INTRO");
+
 	PLAYSOUND("Change", sfxSize);
 	SetActive(true);
 	animation->SetPlay(0);

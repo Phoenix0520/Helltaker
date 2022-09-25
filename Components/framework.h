@@ -130,6 +130,8 @@ typedef D3DXMATRIX	Matrix;
 #include "GameObject.h"
 #include "Terrain.h"
 #include "Collider.h"
+#include "Convert.h"
+#include "CSVReader.h"
 
 // Animation
 #include "Animation.h"
