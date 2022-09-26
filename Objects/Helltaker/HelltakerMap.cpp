@@ -493,3 +493,19 @@ void HelltakerMap::AssignSlate(string name, int x, int y)
 		OBJMANAGER->AddObjectStrings(name);
 	}
 }
+
+void HelltakerMap::AssignObject(string name, int type, int x, int y)
+{
+	OBJMANAGER->FindObject(name)->SetPosition(GetPosition(x, y));
+	SetValue(x, y, (State)type, OBJMANAGER->FindObject(name));
+
+	Vector2 pos = GetPosition(x, y);
+	OBJMANAGER->FindObject(name)->SetPosition(pos);
+	OBJMANAGER->FindObject(name)->SetActive(true);
+	Slate* object = dynamic_cast<Slate*>(OBJMANAGER->FindObject(name));
+	if (object)
+		object->Reset();
+	else
+		MessageBoxA(nullptr, name.c_str(), "Object Missing", MB_OK);
+	OBJMANAGER->AddObjectStrings(name);
+}

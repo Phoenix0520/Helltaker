@@ -48,6 +48,7 @@ public: // 전역함수
 	void AssignLockBox(string name, int x, int y);
 	void AssignFire(string name, float x, float y, int aniID);
 	void AssignSlate(string name, int x, int y);
+	void AssignObject(string name, int type, int x, int y);
 
 	// Assign
 			

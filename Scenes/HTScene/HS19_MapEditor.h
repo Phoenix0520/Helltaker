@@ -30,6 +30,7 @@ private:
 	vector<class Texture*> tempTexture; 	// 미리보기 텍스쳐
 	vector<class Texture*> mapTile;			// 맵의 타일
 	vector<class GameObject*> obj;			// 맵에 넣을 오브젝트
+	vector<string> boxes;
 
 	Vector2 offset = Vector2(0.0f, 0.0f);
 	vector<vector<UINT>> mapObj;
@@ -44,5 +45,6 @@ private:
 
 	int combo = 0;
 	int chapter = 0;
+	int stageHp = 0;
 
 };

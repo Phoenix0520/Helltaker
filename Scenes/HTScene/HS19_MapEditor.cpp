@@ -62,6 +62,8 @@ void HS19_MapEditor::Update()
 		tempTexture[combo]->SetPosition(pos);
 		tempTexture[combo]->Update(V, P);
 	}
+
+	OBJMANAGER->UpdateAll(V, P);
 }
 
 void HS19_MapEditor::Render()
@@ -77,6 +79,8 @@ void HS19_MapEditor::Render()
 	if (1)
 		ShowGUI();
 	DirectWrite::GetDC()->EndDraw();
+
+	OBJMANAGER->RenderAll();
 }
 
 void HS19_MapEditor::ChangeScene()
@@ -149,7 +153,6 @@ void HS19_MapEditor::GUISetMap()
 		}
 	}
 
-	static int stageHp = 0;
 	static int mapSize[2] = { 0, 0 };
 	static Vector2 mapOffset = offset;
 
@@ -257,7 +260,32 @@ void HS19_MapEditor::GUIAddObj()
 							HTMAP->ReSetValue(x, y);
 
 							if (!deleting)
-								HTMAP->SetValue(x, y, (HelltakerMap::State)mapObj[x][y], nullptr);
+							{
+								string name = "";
+
+								switch (combo)
+								{
+								case 0:
+									HTMAP->SetValue(x, y, (HelltakerMap::State)combo, nullptr);
+									break;
+								case 1:
+									HTMAP->AssignHelltaker(x, y, stageHp);
+									break;
+								case 2:
+									name = "Box" + to_string(boxes.size());
+									HTMAP->AssignBox(name, x, y);
+									boxes.push_back(name);
+									break;
+								case 3:
+								case 4:
+								case 5:
+								case 6:
+								case 7:
+								case 8:
+								}
+
+								
+							}
 						}
 					}
 					else if (mouse->Down(0))
