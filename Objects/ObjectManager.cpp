@@ -63,6 +63,23 @@ void ObjectManager::AddObject(string name, GameObject * obj)
 	objects.insert(make_pair(name, obj));
 }
 
+void ObjectManager::DeleteObjectString(string name)
+{
+	for (UINT i = 0; i < objectStrings.size(); i++)
+	{
+		if (objectStrings[i] == name)
+		{
+			objectStrings[i] = "";
+			return;
+		}
+	}
+}
+
+void ObjectManager::DeleteOverlapedObjectString()
+{
+	objectStrings.erase(unique(objectStrings.begin(), objectStrings.end()), objectStrings.end());
+}
+
 void ObjectManager::SetPosition(string name, Vector2 pos)
 {
 	GameObject* object = FindObject(name);

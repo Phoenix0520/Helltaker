@@ -130,7 +130,6 @@ void HS04_Chapter01::ChangeScene()
 	// dynamic_cast : 제대로 변환이 되지않으면 nullptr 를 반환한다.
 	// static_cast : C 에서의 형변환과 비슷하다 컴파일러 상에서만 오류가 나지 않는 상황이 있을 수 있음.
 	
-
 	HTMAP->AssignBox("Box1", 5, 5);
 	HTMAP->AssignBox("Box2", 2, 5);
 	HTMAP->AssignBox("Box3", 2, 6);

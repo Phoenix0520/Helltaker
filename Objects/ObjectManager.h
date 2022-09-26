@@ -24,7 +24,9 @@ public:	// 순수 가상함수
 	void		RenderAll();
 
 	void		AddObject(string name, GameObject* obj);
-	void		AddObjectStrings(string name)				{ objectStrings.push_back(name); }
+	void		AddObjectStrings(string name) { objectStrings.push_back(name); DeleteOverlapedObjectString(); }
+	void		DeleteObjectString(string name);
+	void		DeleteOverlapedObjectString();
 	void		ClearObjectStrings()						{ objectStrings.clear(); }
 
 	void SetPosition(string name, Vector2 pos);

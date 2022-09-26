@@ -15,7 +15,9 @@ public:
 	void SetOffset(Vector2 val) { offset = val; }
 	void SetOffset(float x, float y) { offset = Vector2(x, y); }
 
+	void ResetAnotherValue(UINT state);
 	void ShowGUI();
+	void ReadCSVFile(string file);
 
 	void GUISetMap();
 	void GUIAddObj();
@@ -30,7 +32,12 @@ private:
 	vector<class Texture*> tempTexture; 	// 미리보기 텍스쳐
 	vector<class Texture*> mapTile;			// 맵의 타일
 	vector<class GameObject*> obj;			// 맵에 넣을 오브젝트
+
+	
 	vector<string> boxes;
+	vector<string> mobs;
+	vector<string> traps;
+	vector<string> goals;
 
 	Vector2 offset = Vector2(0.0f, 0.0f);
 	vector<vector<UINT>> mapObj;

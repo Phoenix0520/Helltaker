@@ -194,8 +194,10 @@ void HelltakerMap::SetSize(int x, int y, bool reset)
 			map->secondObject = nullptr;
 
 			maps.push_back(map);
+			names.push_back("");
 		}
 	}
+
 
 	sizeX = x;
 	sizeY = y;
@@ -210,7 +212,9 @@ void HelltakerMap::SetValue(int x, int y, State state, GameObject* object)
 	// 2차원을 1차원으로 계산한것이다.
 
 	State oldState = maps[id]->state;
+
 	maps[id]->state = (State)((int)oldState | (int)state);
+	
 	// 집어넣은 state 로 바꿔준다.
 
 	if (state == State::trap)
@@ -260,6 +264,34 @@ void HelltakerMap::ReSetValue(int x, int y, State state)
 	maps[id]->gameObject = nullptr;
 }
 
+void HelltakerMap::ReSetAnotherValue(State state)
+{
+	for (UINT x = 0; x < sizeX; x++)
+	{
+		for (UINT y = 0; y < sizeY; y++)
+		{
+			int id = sizeX * y + x;
+			
+			State oldState = maps[id]->state;
+			
+			if (maps[id]->state == state + move)
+			{
+				maps[id]->state = move;
+				maps[id]->gameObject = nullptr;
+			}
+		}
+	}
+}
+
+string HelltakerMap::GetName(int x, int y)
+{
+	int id = sizeX * y + x;
+
+	cout << names[id] << endl;
+
+	return names[id];
+}
+
 void HelltakerMap::SetMapValue(int y, int startX, int endX)
 {
 	for (int i = startX; i <= endX; i++)
@@ -306,6 +338,10 @@ void HelltakerMap::AssignHelltaker(int x, int y, int hp)
 		obj2->SetHP(hp);
 		obj2->Reset();
 
+		int id = sizeX * y + x;
+
+		names[id] = "Helltaker";
+
 		OBJMANAGER->AddObjectStrings("Helltaker");
 	}
 }
@@ -325,6 +361,9 @@ void HelltakerMap::AssignMob(string name, int x, int y)
 			object->Reset();
 		else
 			MessageBoxA(nullptr, name.c_str(), "Object Missing", MB_OK);
+
+		int id = sizeX * y + x;
+		names[id] = name;
 
 		OBJMANAGER->AddObjectStrings(name);
 	}
@@ -348,6 +387,9 @@ void HelltakerMap::AssignBox(string name, int x, int y)
 		else
 			MessageBoxA(nullptr, name.c_str(), "Object Missing", MB_OK);
 
+		int id = sizeX * y + x;
+		names[id] = name;
+
 		OBJMANAGER->AddObjectStrings(name);
 	}
 }
@@ -368,6 +410,9 @@ void HelltakerMap::AssignGoal(string name, int x, int y)
 		else
 			MessageBoxA(nullptr, name.c_str(), "Object Missing", MB_OK);
 
+		int id = sizeX * y + x;
+		names[id] = name;
+
 		OBJMANAGER->AddObjectStrings(name);
 	}
 }
@@ -382,6 +427,10 @@ void HelltakerMap::AssignTrap(string name, int x, int y)
 		Vector2 pos = GetPosition(x, y);
 		OBJMANAGER->FindObject(name)->SetPosition(pos);
 		OBJMANAGER->FindObject(name)->SetActive(true);
+
+		int id = sizeX * y + x;
+		names[id] = name;
+
 		OBJMANAGER->AddObjectStrings(name);
 		
 		Trap* object = dynamic_cast<Trap*>(OBJMANAGER->FindObject(name));
@@ -413,6 +462,9 @@ void HelltakerMap::AssignTrap(string name, int x, int y, int state)
 		}
 		else
 			MessageBoxA(nullptr, name.c_str(), "Object Missing", MB_OK);
+
+		int id = sizeX * y + x;
+		names[id] = name;
 		OBJMANAGER->AddObjectStrings(name);
 	}
 }
@@ -432,6 +484,9 @@ void HelltakerMap::AssignKey(string name, int x, int y)
 			object->Reset();
 		else
 			MessageBoxA(nullptr, name.c_str(), "Object Missing", MB_OK);
+
+		int id = sizeX * y + x;
+		names[id] = name;
 		OBJMANAGER->AddObjectStrings(name);
 	}
 }
@@ -451,6 +506,9 @@ void HelltakerMap::AssignLockBox(string name, int x, int y)
 			object->Reset();
 		else
 			MessageBoxA(nullptr, name.c_str(), "Object Missing", MB_OK);
+
+		int id = sizeX * y + x;
+		names[id] = name;
 		OBJMANAGER->AddObjectStrings(name);
 	}
 }
@@ -471,6 +529,9 @@ void HelltakerMap::AssignFire(string name, float x, float y, int aniID)
 		}
 		else
 			MessageBoxA(nullptr, name.c_str(), "Object Missing", MB_OK);
+
+		int id = sizeX * y + x;
+		names[id] = name;
 		OBJMANAGER->AddObjectStrings(name);
 	}
 }
@@ -490,6 +551,10 @@ void HelltakerMap::AssignSlate(string name, int x, int y)
 			object->Reset();
 		else
 			MessageBoxA(nullptr, name.c_str(), "Object Missing", MB_OK);
+
+		int id = sizeX * y + x;
+		names[id] = name;
+
 		OBJMANAGER->AddObjectStrings(name);
 	}
 }
@@ -507,5 +572,9 @@ void HelltakerMap::AssignObject(string name, int type, int x, int y)
 		object->Reset();
 	else
 		MessageBoxA(nullptr, name.c_str(), "Object Missing", MB_OK);
+
+	int id = sizeX * y + x;
+	names[id] = name;
+
 	OBJMANAGER->AddObjectStrings(name);
 }

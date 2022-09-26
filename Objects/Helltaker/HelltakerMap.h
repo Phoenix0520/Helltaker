@@ -75,11 +75,13 @@ public: // 전역함수
 	void SetValue(int x, int y, State state, GameObject* object);
 	void ReSetValue(int x, int y);
 	void ReSetValue(int x, int y, State state);
+	void ReSetAnotherValue(State state);
 	void SetOffset(float x, float y) { this->offset = Vector2(x, y); }
 	void SetOffset(Vector2 offset) { this->offset = offset; }
 	void AddOffset(float x, float y) { this->offset += Vector2(x, y); }
 	void AddOffset(Vector2 val) { this->offset += offset; }
 	Vector2 GetOffset() { return this->offset; }
+	string GetName(int x, int y);
 	// Setter
 
 
@@ -92,6 +94,7 @@ private: // 멤버변수
 	};
 
 	vector<HTMap*> maps;
+	vector<string> names;
 	// map 들을 담는 vector
 
 	int sizeX = 0;
