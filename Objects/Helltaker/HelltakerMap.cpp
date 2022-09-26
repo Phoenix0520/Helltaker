@@ -517,22 +517,21 @@ void HelltakerMap::AssignFire(string name, float x, float y, int aniID)
 {
 	// Fire
 	{
-		OBJMANAGER->FindObject(name)->SetPosition(x, y);
-		OBJMANAGER->FindObject(name)->SetActive(true);
+		Fire* object = (Fire*)(OBJMANAGER->FindObject(name));
 		
-		Fire* object = dynamic_cast<Fire*>(OBJMANAGER->FindObject(name));
 
 		if (object)
 		{
+			OBJMANAGER->FindObject(name)->SetPosition(x, y);
+			OBJMANAGER->FindObject(name)->SetActive(true);
 			object->SetState(aniID);
 			object->Reset();
+			OBJMANAGER->AddObjectStrings(name);
 		}
 		else
+		{
 			MessageBoxA(nullptr, name.c_str(), "Object Missing", MB_OK);
-
-		//int id = sizeX * y + x;
-		//names[id] = name;
-		OBJMANAGER->AddObjectStrings(name);
+		}
 	}
 }
 

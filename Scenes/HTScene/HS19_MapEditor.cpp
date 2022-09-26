@@ -154,19 +154,25 @@ void HS19_MapEditor::ReadCSVFile(string file)
 	CSVReader* reader = new CSVReader();
 	reader->OpenFile(file);
 
-	for (UINT x = 0; x < mapObj.size(); x++)
+	for (UINT x = 0; x < 10; x++)
 	{
-		for (UINT y = 0; y < mapObj[x].size(); y++)
+		vector<float> datas;
+		data.push_back(datas);
+		for (UINT y = 0; y < 10; y++)
 		{
 			wstring val = L"";
 			reader->GetData(x, y, val);
 
-			string str = str.assign(val.begin(), val.end());
+			string str = "";
+			str.assign(val.begin(), val.end());
 			char* type = new char();
 			float value = 0.0f;
 			value = strtof(str.c_str(), &type);
+			
 
-			data[x][y] = value;
+			data[x].push_back(value);
+
+			cout << data[x][y] << endl;
 		}
 	}
 }
@@ -404,11 +410,31 @@ void HS19_MapEditor::GUISaveMap()
 	}
 	if (ImGui::Button(u8"챕터 불러오기"))
 	{
-		ReadCSVFile("./Map0" + to_string(chapter + 1));
+		ReadCSVFile("./Map0" + to_string(chapter + 1) + ".csv");
 
-		//if (!= chapter + 1)
-			//return;
+		if ((int)data[0][0] != chapter + 1)
+			return;
 
+		HTMAP->Clear();
+		OBJMANAGER->ClearObjectStrings();
+
+		mapObj.resize((UINT)data[0][1]);
+
+		for (UINT i = 0; i < (UINT)data[0][1]; i++)
+			mapObj[i].resize((UINT)data[0][2]);
+
+		HTMAP->SetOffset(data[0][3], data[0][4]);
+
+		toggleTrap = data[0][5];
+
+		for (UINT x = 0; x < mapObj.size(); x++)
+		{
+			for (UINT y = 1; y < mapObj[x].size() + 1; y++)
+			{
+				if (data[x][y] > 0)
+					HTMAP->SetValue(x, y - 1, HelltakerMap::State::move, nullptr);
+			}
+		}
 	}
 
 	ImGui::Separator();
