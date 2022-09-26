@@ -114,6 +114,9 @@ Helltaker::~Helltaker()
 
 void Helltaker::Update(Matrix V, Matrix P)//키 입력과 관련된 동작들을 구현한다.
 {
+	if (HTMAP->GetSizeX() == 0 || HTMAP->GetSizeY() == 0)
+		return;
+
 	Vector2 position = GetPosition(); //현재의 position을 가져온다.
 
 	POINT pt = HTMAP->GetMapXY(position);
@@ -556,6 +559,9 @@ void Helltaker::MoveObject(Direction direction, Vector2& position)
 
 void Helltaker::Render()
 {
+	if (HTMAP->GetSizeX() == 0 || HTMAP->GetSizeY() == 0)
+		return;
+
 	animation->Render();
 	kickEffect->Render();
 	dustEffect->Render();

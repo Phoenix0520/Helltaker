@@ -63,7 +63,8 @@ void HS19_MapEditor::Update()
 		tempTexture[combo]->Update(V, P);
 	}
 
-	OBJMANAGER->UpdateAll(V, P);
+	if (HTMAP->GetSizeX() != 0 && HTMAP->GetSizeY() != 0)
+		OBJMANAGER->UpdateAll(V, P);
 }
 
 void HS19_MapEditor::Render()
@@ -80,7 +81,8 @@ void HS19_MapEditor::Render()
 		ShowGUI();
 	DirectWrite::GetDC()->EndDraw();
 
-	OBJMANAGER->RenderAll();
+	if (HTMAP->GetSizeX() != 0 && HTMAP->GetSizeY() != 0)
+		OBJMANAGER->RenderAll();
 }
 
 void HS19_MapEditor::ChangeScene()
@@ -149,6 +151,24 @@ void HS19_MapEditor::ShowGUI()
 
 void HS19_MapEditor::ReadCSVFile(string file)
 {
+	CSVReader* reader = new CSVReader();
+	reader->OpenFile(file);
+
+	for (UINT x = 0; x < mapObj.size(); x++)
+	{
+		for (UINT y = 0; y < mapObj[x].size(); y++)
+		{
+			wstring val = L"";
+			reader->GetData(x, y, val);
+
+			string str = str.assign(val.begin(), val.end());
+			char* type = new char();
+			float value = 0.0f;
+			value = strtof(str.c_str(), &type);
+
+			data[x][y] = value;
+		}
+	}
 }
 
 void HS19_MapEditor::GUISetMap()
@@ -185,6 +205,9 @@ void HS19_MapEditor::GUISetMap()
 
 	if (ImGui::InputInt2(u8"¸Ê Å©±â", mapSize))
 	{
+		OBJMANAGER->ClearObjectStrings();
+		HTMAP->Clear();
+
 		init = false;
 
 		mapObj.resize((UINT)mapSize[0]);
@@ -381,7 +404,10 @@ void HS19_MapEditor::GUISaveMap()
 	}
 	if (ImGui::Button(u8"Ã©ÅÍ ºÒ·¯¿À±â"))
 	{
-		ReadCSVFile("./");
+		ReadCSVFile("./Map0" + to_string(chapter + 1));
+
+		//if (!= chapter + 1)
+			//return;
 
 	}
 

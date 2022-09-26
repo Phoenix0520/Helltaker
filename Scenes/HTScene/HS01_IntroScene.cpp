@@ -3,6 +3,7 @@
 #include "Button.h"
 #include "Booper.h"
 #include "ChapterButton.h"
+#include "HelltakerMap.h"
 
 HS01_IntroScene::HS01_IntroScene()
 {
@@ -228,7 +229,7 @@ void HS01_IntroScene::Update()
 			{
 				button1->SetHover(true);
 
-				for (UINT i = 0; i < 10; i++)
+				for (UINT i = 0; i <= 10; i++)
 					button[i]->SetHover(false);
 			}
 		}
@@ -298,7 +299,11 @@ void HS01_IntroScene::Update()
 	if (enter && click == 3)
 	{
 		if (button1->GetHover())
+		{
+			Scene* scene = SCENEMANAGER->GetScene("HS03_ChangeScene");
+			scene->SetNextScene("HS04_Chapter01");
 			return;
+		}
 		if (button2->GetHover())
 		{
 			button[1]->SetHover(true);
@@ -308,7 +313,7 @@ void HS01_IntroScene::Update()
 			PostQuitMessage(0);
 	}
 	
-	if (click == 6)
+	if (button1->GetHover() && click == 6)
 	{
 		SCENEMANAGER->ChangeScene(nextSceneName);
 	}
@@ -755,10 +760,21 @@ void HS01_IntroScene::ChangeScene()
 	button3->SetPosition(0.0f, (float)-MAIN->GetHeight() / 2 - 150.0f);
 
 	click = 0;
-	button1->SetHover(true);
-	button2->SetHover(false);
-	button3->SetHover(false);
+	
+	ResetButton();
 	
 	//time = 0.0f;
 	timer = 3.0f;
+}
+
+void HS01_IntroScene::ResetButton()
+{
+	button1->SetHover(true);
+	button2->SetHover(false);
+	button3->SetHover(false);
+
+	for (UINT i = 0; i <= 10; i++)
+	{
+		button[i]->SetHover(false);
+	}
 }

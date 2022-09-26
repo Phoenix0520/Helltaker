@@ -9,6 +9,8 @@ public:	// 전역 함수
 	void Update() override;
 	void Render() override;
 	void ChangeScene() override;
+	
+	void ResetButton();
 
 	void UpdateChapterSelect(Matrix V, Matrix P);
 	void RenderChapterSelect();

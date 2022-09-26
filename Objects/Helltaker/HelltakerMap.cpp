@@ -530,8 +530,8 @@ void HelltakerMap::AssignFire(string name, float x, float y, int aniID)
 		else
 			MessageBoxA(nullptr, name.c_str(), "Object Missing", MB_OK);
 
-		int id = sizeX * y + x;
-		names[id] = name;
+		//int id = sizeX * y + x;
+		//names[id] = name;
 		OBJMANAGER->AddObjectStrings(name);
 	}
 }

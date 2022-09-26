@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "ChapterButton.h"
 #include "HS01_IntroScene.h"
+#include "HelltakerMap.h"
 
 ChapterButton::ChapterButton(UINT num)
 {
@@ -107,6 +108,8 @@ void ChapterButton::Update(Matrix V, Matrix P)
 			}
 			else
 			{
+				HTMAP->Clear();
+
 				string sceneName = scene->GetSceneName();
 				scene->SetReset(true);
 

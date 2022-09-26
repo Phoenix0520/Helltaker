@@ -41,6 +41,7 @@ private:
 
 	Vector2 offset = Vector2(0.0f, 0.0f);
 	vector<vector<UINT>> mapObj;
+	vector<vector<float>> data;
 	vector<UINT> mapObjX;
 	vector<UINT> mapObjY;
 
