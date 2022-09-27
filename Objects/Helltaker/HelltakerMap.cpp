@@ -184,6 +184,7 @@ GameObject* HelltakerMap::GetSecondObject(int x, int y)
 void HelltakerMap::SetSize(int x, int y, bool reset)
 {
 	Clear();
+
 	for (int i = 0; i < (x * y); i++)
 	{
 		if (reset)
@@ -197,7 +198,6 @@ void HelltakerMap::SetSize(int x, int y, bool reset)
 			names.push_back("");
 		}
 	}
-
 
 	sizeX = x;
 	sizeY = y;

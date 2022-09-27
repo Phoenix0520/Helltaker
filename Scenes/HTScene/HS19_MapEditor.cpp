@@ -89,6 +89,10 @@ void HS19_MapEditor::ChangeScene()
 {
 	SetActive(true);
 	ShowCursor(true);
+	HTMAP->Clear();
+	OBJMANAGER->ClearObjectStrings();
+	HTMAP->SetSize(0, 0);
+	HTMAP->SetOffset(0.0f, 0.0f);
 }
 
 void HS19_MapEditor::ResetAnotherValue(UINT state)
@@ -154,9 +158,11 @@ void HS19_MapEditor::ReadCSVFile(string file)
 	CSVReader* reader = new CSVReader();
 	reader->OpenFile(file);
 
+	data.clear();
+
 	for (UINT x = 0; x < 10; x++)
 	{
-		vector<float> datas;
+		vector<int> datas;
 		data.push_back(datas);
 		for (UINT y = 0; y < 10; y++)
 		{
@@ -169,18 +175,43 @@ void HS19_MapEditor::ReadCSVFile(string file)
 			float value = 0.0f;
 			value = strtof(str.c_str(), &type);
 			
-
-			data[x].push_back(value);
-
-			cout << data[x][y] << endl;
+			data[x].push_back((int)value);
 		}
 	}
+
+	SAFE_DELETE(reader);
+}
+
+void HS19_MapEditor::WriteCSVFile(string file)
+{
+	FILE* fp = fopen(file.c_str(), "wt");
+
+	for (UINT y = 0; y < data.size(); y++)
+	{
+		for (UINT x = 0; x < data[y].size(); x++)
+		{
+			string str = to_string(data[y][x]);
+			const char* chr = str.c_str();
+			cout << chr << " ";
+			fputs(chr, fp);
+			
+			if (x != data[y].size() - 1)
+				fputc(',', fp);
+		}
+
+		cout << endl;
+		fputs("\n", fp);
+	}
+
+	fclose(fp);
 }
 
 void HS19_MapEditor::GUISetMap()
 {
 	static const char* scenes[] =
 	{ u8"챕터 1", u8"챕터 2", u8"챕터 3", u8"챕터 4", u8"챕터 5", u8"챕터 6", u8"챕터 7", u8"챕터 8", u8"챕터 9" };
+
+	int oldCptr = chapter;
 
 	if (ImGui::Combo(u8"챕터 선택", &chapter, scenes, ARRAYSIZE(scenes)))
 	{
@@ -198,10 +229,27 @@ void HS19_MapEditor::GUISetMap()
 			mapBG->SetImageFile(L"./Images/Background/Chapter0" + to_wstring(chapter + 1) + L".png");
 			break;
 		}
-	}
 
-	static int mapSize[2] = { 0, 0 };
-	static Vector2 mapOffset = offset;
+		if (chapter != oldCptr)
+		{
+			HTMAP->Clear();
+			OBJMANAGER->ClearObjectStrings();
+			mapObj.clear();
+			mapObjX.clear();
+			mapObjY.clear();
+
+			boxes.clear();
+			mobs.clear();
+			traps.clear();
+			goals.clear();
+
+			mapSize[0] = 0;
+			mapSize[1] = 0;
+			toggleTrap = 0;
+			stageHp = 0;
+			offset = Vector2(0.0f, 0.0f);
+		}
+	}
 
 	if (ImGui::InputInt(u8"스테이지 체력", &stageHp))
 	{
@@ -226,17 +274,13 @@ void HS19_MapEditor::GUISetMap()
 		HTMAP->SetSize(mapObjX.size(), mapObjY.size());
 	}
 
-	if (ImGui::InputFloat2(u8"맵 오프셋", mapOffset, "%.1f"))
+	if (ImGui::InputFloat2(u8"맵 오프셋", offset, "%.1f"))
 	{
-		offset = mapOffset;
 		HTMAP->SetOffset(offset);
 	}
 
-	static bool toggle = false;
-
-	if (ImGui::Checkbox(u8"토글 트랩", &toggle))
+	if (ImGui::Checkbox(u8"토글 트랩", &toggleTrap))
 	{
-		toggleTrap = toggle;
 	}
 }
 
@@ -317,7 +361,6 @@ void HS19_MapEditor::GUIAddObj()
 						mapObj[x][y] += pow(2, combo);
 
 						cout << mapObj[x][y] << endl;
-
 						
 						if (!deleting)
 						{
@@ -407,44 +450,167 @@ void HS19_MapEditor::GUISaveMap()
 
 	if (ImGui::Button(u8"현재 챕터 저장"))
 	{
+		data.clear();
+
+		data.resize(mapSize[1] + 1);
+		for (UINT i = 0; i < mapSize[1] + 1; i++)
+			data[i].resize(mapSize[0]);
+
+		data[0][0] = chapter + 1;
+		data[0][1] = mapSize[0];
+		data[0][2] = mapSize[1];
+		data[0][3] = offset.x;
+		data[0][4] = offset.y;
+		data[0][5] = toggleTrap;
+		data[0][6] = stageHp;
+
+		for (UINT y = 1; y < mapSize[1] + 1; y++)
+		{
+			for (UINT x = 0; x < mapSize[0]; x++)
+			{
+				data[y][x] = HTMAP->GetValue(x, y - 1);
+				cout << data[y][x] << " ";
+			}
+			cout << endl;
+		}
+
+		WriteCSVFile("./Maps/Map0" + to_string(chapter + 1) + ".csv");
+
+		file = 2;
 	}
 	if (ImGui::Button(u8"챕터 불러오기"))
 	{
-		ReadCSVFile("./Map0" + to_string(chapter + 1) + ".csv");
+		ReadCSVFile("./Maps/Map0" + to_string(chapter + 1) + ".csv");
 
 		if ((int)data[0][0] != chapter + 1)
+		{
+			cout << "오류!" << endl;
+			file = -1;
 			return;
+		}
+		
+		file = 1;
 
 		HTMAP->Clear();
 		OBJMANAGER->ClearObjectStrings();
+		init = false;
 
-		mapObj.resize((UINT)data[0][1]);
+		int sx = data[0][1];
+		int sy = data[0][2];
 
-		for (UINT i = 0; i < (UINT)data[0][1]; i++)
-			mapObj[i].resize((UINT)data[0][2]);
+		mapSize[0] = sx;
+		mapObj.resize(sx);
+		cout << "SizeX : " << sx;
 
-		HTMAP->SetOffset(data[0][3], data[0][4]);
+		mapSize[1] = sy;
+		for (UINT i = 0; i < sx; i++)
+			mapObj[i].resize(sy);
+		cout << " SizeY : " << sy << endl;
+
+		HTMAP->SetSize(sx, sy);
+
+		offset = Vector2((float)data[0][3], (float)data[0][4]);
+
+		HTMAP->SetOffset(offset);
+
+		cout << "Map Offset : " << offset.x << " , " << offset.y << endl;
 
 		toggleTrap = data[0][5];
 
-		for (UINT x = 0; x < mapObj.size(); x++)
+		cout << "Toggle Trap : " << toggleTrap << endl;
+
+		stageHp = data[0][6];
+		Helltaker* ht = (Helltaker*)OBJMANAGER->FindObject("Helltaker");
+		ht->SetHP(stageHp);
+
+		cout << "State HP : " << stageHp << endl;
+
+		boxes.clear();
+		mobs.clear();
+		traps.clear();
+		goals.clear();
+
+		for (UINT y = 1; y < data.size(); y++)
 		{
-			for (UINT y = 1; y < mapObj[x].size() + 1; y++)
+			for (UINT x = 0; x < data[y].size(); x++)
 			{
-				if (data[x][y] > 0)
-					HTMAP->SetValue(x, y - 1, HelltakerMap::State::move, nullptr);
+				int value = (int)data[y][x];
+				y--;
+				cout << x << y << " : " << value << " ";
+
+				if (value > 0)
+				{
+					HTMAP->ReSetValue(x, y);
+					HTMAP->SetValue(x, y, HelltakerMap::State::move, nullptr);
+
+					string name = "";
+
+					switch ((HTMAPSTATE)value)
+					{
+					case 1:
+						break;
+					case 3:
+						HTMAP->AssignHelltaker(x, y, stageHp);
+						break;
+					case 5:
+						name = "Box" + to_string(boxes.size() + 1);
+						HTMAP->AssignBox(name, x, y);
+						boxes.push_back(name);
+						break;											
+					case 9:
+						name = "Mob" + to_string(mobs.size() + 1);
+						HTMAP->AssignMob(name, x, y);
+						mobs.push_back(name);
+						break;
+					case 17:
+						name = "Trap" + to_string(traps.size() + 1);
+						HTMAP->AssignTrap(name, x, y);
+						traps.push_back(name);
+						break;
+					case 33:
+						name = "Goal" + to_string(chapter + goals.size() + 1);
+						HTMAP->AssignGoal(name, x, y);
+						goals.push_back(name);
+						break;
+					case 65:
+						name = "Key";
+						HTMAP->AssignKey(name, x, y);
+						break;
+					case 129:
+						name = "LockBox";
+						HTMAP->AssignLockBox(name, x, y);
+						HTMAP->AssignBox(name, x, y);
+						break;
+					}
+				}
+				y++;
 			}
+			cout << endl;
 		}
 	}
 
-	ImGui::Separator();
-
-	if (ImGui::Button(u8"전체 챕터 저장"))
+	if (file == 1)
 	{
-
+		ImGui::Text(u8"파일");
+		ImGui::SameLine();
+		ImGui::Text(("./Maps/Map0" + to_string(chapter + 1) + ".csv").c_str());
+		ImGui::SameLine();
+		ImGui::Text(u8"불러오기 성공!");
 	}
-	if (ImGui::Button(u8"전체 불러오기"))
+	else if (file == 2)
 	{
-
+		ImGui::Text(u8"파일");
+		ImGui::SameLine();
+		ImGui::Text(("./Maps/Map0" + to_string(chapter + 1) + ".csv").c_str());
+		ImGui::SameLine();
+		ImGui::Text(u8"저장 성공!");
+	}
+	else if (file == -1)
+	{
+		ImGui::Text(u8"파일");
+		ImGui::SameLine();
+		ImGui::Text(("./Maps/Map0" + to_string(chapter + 1) + ".csv").c_str());
+		ImGui::SameLine();
+		ImGui::Text(u8"불러오기 실패!");
 	}
 }

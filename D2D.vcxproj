@@ -107,6 +107,7 @@
     <ClInclude Include="Systems\MainWindow.h" />
     <ClInclude Include="Util\Convert.h" />
     <ClInclude Include="Util\CSVReader.h" />
+    <ClInclude Include="Util\CSVWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base\Hard\Audio.cpp">
@@ -178,7 +179,7 @@
     <ClCompile Include="Scenes\HTScene\HS14_Chapter08.cpp" />
     <ClCompile Include="Scenes\HTScene\HS15_Chapter09.cpp" />
     <ClCompile Include="Scenes\HTScene\HS16_JudgeScene.cpp" />
-    <ClCompile Include="Scenes\HTScene\HS17_BossScene .cpp" />
+    <ClCompile Include="Scenes\HTScene\HS17_BossScene.cpp" />
     <ClCompile Include="Scenes\HTScene\HS19_MapEditor.cpp" />
     <ClCompile Include="Scenes\SceneManager.cpp" />
     <ClCompile Include="Shader\ColorShader.cpp" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Systems\MainWindow.cpp" />
     <ClCompile Include="Util\Convert.cpp" />
     <ClCompile Include="Util\CSVReader.cpp" />
+    <ClCompile Include="Util\CSVWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\imgui.ini">

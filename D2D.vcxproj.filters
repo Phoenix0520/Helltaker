@@ -87,6 +87,7 @@
     <ClInclude Include="Libraries\imguiDx11.h" />
     <ClInclude Include="Util\Convert.h" />
     <ClInclude Include="Util\CSVReader.h" />
+    <ClInclude Include="Util\CSVWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Systems\D2D.cpp" />
@@ -160,11 +161,12 @@
     <ClCompile Include="Objects\UI\Button.cpp" />
     <ClCompile Include="Objects\UI\CheckBox.cpp" />
     <ClCompile Include="Components\framework.cpp" />
-    <ClCompile Include="Scenes\HTScene\HS17_BossScene .cpp" />
     <ClCompile Include="Objects\UI\ChapterButton.cpp" />
     <ClCompile Include="Scenes\HTScene\HS19_MapEditor.cpp" />
     <ClCompile Include="Util\Convert.cpp" />
     <ClCompile Include="Util\CSVReader.cpp" />
+    <ClCompile Include="Util\CSVWriter.cpp" />
+    <ClCompile Include="Scenes\HTScene\HS17_BossScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\HLSL\Color.hlsl" />

@@ -324,6 +324,17 @@ void SceneManager::CreateObject()
 		}
 	}
 
+	for (int i = 1; i <= 8; i++)
+	{
+		string str = "Fire" + to_string(i);
+		if (!OBJMANAGER->FindObject(str))
+		{
+			Fire* fire = new Fire();
+			OBJMANAGER->AddObject(str, fire);
+			scene->AddLoadVal();
+		}
+	}
+
 	for (int i = 1; i < 32; i++)
 	{
 		string str = "Trap" + to_string(i);
@@ -353,18 +364,6 @@ void SceneManager::CreateObject()
 		{
 			LockBox* lbox = new LockBox();
 			OBJMANAGER->AddObject(str, lbox);
-			scene->AddLoadVal();
-		}
-	}
-
-
-	for (int i = 1; i <= 8; i++)
-	{
-		string str = "Fire" + to_string(i);
-		if (!OBJMANAGER->FindObject(str))
-		{
-			Fire* fire = new Fire();
-			OBJMANAGER->AddObject(str, fire);
 			scene->AddLoadVal();
 		}
 	}

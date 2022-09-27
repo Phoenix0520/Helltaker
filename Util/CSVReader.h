@@ -28,8 +28,6 @@ public:
 
 	void OpenFile(string fileName);
 	void Parsing(char* buf);
-	//void GetData(UINT row, UINT col, int& ret);
-	//void GetData(UINT row, UINT col, UINT& ret);
 	bool GetData(UINT row, UINT col, float& ret);
 	bool GetData(UINT row, UINT col, string& ret);
 	bool GetData(UINT row, UINT col, wstring& ret);

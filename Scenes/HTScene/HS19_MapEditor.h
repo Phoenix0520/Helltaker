@@ -18,6 +18,7 @@ public:
 	void ResetAnotherValue(UINT state);
 	void ShowGUI();
 	void ReadCSVFile(string file);
+	void WriteCSVFile(string file);
 
 	void GUISetMap();
 	void GUIAddObj();
@@ -33,7 +34,6 @@ private:
 	vector<class Texture*> mapTile;			// 맵의 타일
 	vector<class GameObject*> obj;			// 맵에 넣을 오브젝트
 
-	
 	vector<string> boxes;
 	vector<string> mobs;
 	vector<string> traps;
@@ -41,9 +41,10 @@ private:
 
 	Vector2 offset = Vector2(0.0f, 0.0f);
 	vector<vector<UINT>> mapObj;
-	vector<vector<float>> data;
+	vector<vector<int>> data;
 	vector<UINT> mapObjX;
 	vector<UINT> mapObjY;
+	int mapSize[2];
 
 	bool init = false;
 	bool inserting = false;
@@ -51,8 +52,11 @@ private:
 	bool toggleTrap = false;
 	bool drag = false;
 
+	bool load = false;
+	bool save = false;
+
 	int combo = 0;
 	int chapter = 0;
 	int stageHp = 0;
-
+	int file = 0;
 };
