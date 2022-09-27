@@ -2,6 +2,11 @@
 #include "HS19_MapEditor.h"
 #include "HelltakerMap.h"
 #include "Helltaker.h"
+#include "Key.h"
+#include "LockBox.h"
+#include "Slate.h"
+#include "Fire.h"
+
 
 HS19_MapEditor::HS19_MapEditor()
 {
@@ -242,6 +247,7 @@ void HS19_MapEditor::GUISetMap()
 			mobs.clear();
 			traps.clear();
 			goals.clear();
+			fires.clear();
 
 			mapSize[0] = 0;
 			mapSize[1] = 0;
@@ -318,6 +324,9 @@ void HS19_MapEditor::GUIAddObj()
 		deleting = false;
 	}
 
+	static float fPos[2] = { 0.0f, 0.0f };
+	static int type = 0;
+
 	if (!inserting && !deleting)
 	{
 		if (ImGui::Button(u8"추가"))
@@ -365,6 +374,7 @@ void HS19_MapEditor::GUIAddObj()
 						if (!deleting)
 						{
 							string name = "";
+							GameObject* obj = nullptr;
 
 							switch (combo)
 							{
@@ -397,15 +407,39 @@ void HS19_MapEditor::GUIAddObj()
 								break;
 							case 6:
 								name = "Key";
+								HTMAP->ReSetAnotherValue(HTMAPSTATE::key);
 								HTMAP->AssignKey(name, x, y);
+								obj = (Key*)OBJMANAGER->FindObject(name);
+								obj->SetActive(true);
+								nokey = false;
+								warning = false;
 								break;
 							case 7:
 								name = "LockBox";
+								obj = (Key*)OBJMANAGER->FindObject("Key");
+								
+								if (nokey)
+								{
+									warning = true;
+									break;
+								}
+
+								HTMAP->ReSetAnotherValue(HTMAPSTATE::lockBox);
 								HTMAP->AssignLockBox(name, x, y);
+								obj = (LockBox*)OBJMANAGER->FindObject(name);
+								obj->SetActive(true);
 								break;
 							case 8:
 								name = "Slate";
+								HTMAP->ReSetAnotherValue(HTMAPSTATE::slate);
 								HTMAP->AssignBox(name, x, y);
+								obj = (Slate*)OBJMANAGER->FindObject(name);
+								obj->SetActive(true);
+								break;
+							case 9:
+								name = "Fire" + to_string(fires.size() + 1);
+								HTMAP->AssignFire(name, fPos[0], fPos[1], type);
+								fires.push_back(name);
 								break;
 							}
 
@@ -414,7 +448,12 @@ void HS19_MapEditor::GUIAddObj()
 						else
 						{
 							string name = HTMAP->GetName(x, y);
+							
+							if (name == "Key")
+								nokey = true;
+
 							OBJMANAGER->DeleteObjectString(name);
+
 							HTMAP->ReSetValue(x, y);
 							HTMAP->SetValue(x, y, HTMAPSTATE::move, nullptr);
 						}
@@ -438,8 +477,28 @@ void HS19_MapEditor::GUIAddObj()
 			//inserting = true;
 		}
 	}
+	else if (combo == 9)
+	{
+		if (ImGui::SliderFloat2(u8"위치", fPos, -1000.0f, 1000.0f, "%.0f"))
+		{
+
+		}
+
+		static const char* types[] = { u8"빈 화로", u8"불붙은 화로" };
+		if (ImGui::Combo(u8"화로 타입", &type, types, ARRAYSIZE(types)))
+		{
+			
+		}
+
+	}
 	else
 		drag = false;
+
+	if (warning)
+	{
+		ImGui::Text(u8"잠긴 박스를 추가할려면");
+		ImGui::Text(u8"열쇠를 먼저 추가해야합니다!");
+	}
 }
 
 void HS19_MapEditor::GUISaveMap()

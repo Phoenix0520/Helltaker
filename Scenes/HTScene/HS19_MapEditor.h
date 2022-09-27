@@ -38,6 +38,7 @@ private:
 	vector<string> mobs;
 	vector<string> traps;
 	vector<string> goals;
+	vector<string> fires;
 
 	Vector2 offset = Vector2(0.0f, 0.0f);
 	vector<vector<UINT>> mapObj;
@@ -52,6 +53,8 @@ private:
 	bool toggleTrap = false;
 	bool drag = false;
 
+	bool nokey = true;
+	bool warning = false;
 	bool load = false;
 	bool save = false;
 

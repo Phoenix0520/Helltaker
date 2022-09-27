@@ -43,7 +43,7 @@ Piston::Piston(float time)
 
 	udrPiston[0]->SetStop();
 
-	udrPiston[0]->SetPosition(770.0f, 570.0f);
+	udrPiston[0]->SetPosition(-770.0f, 570.0f);
 	udrPiston[0]->SetRotation(0.0f, 180.0f, 0.0f);
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,8 +64,9 @@ Piston::Piston(float time)
 	}
 
 	uprPiston[1]->SetStop();
+	uprPiston[1]->SetPosition(-770.0f, -470.0f);
 
-	uprPiston[1]->SetPosition(-770.0f, -570.0f);
+	////////////////////////////////////////////////////////////
 
 	udrPiston[1] = new Animation(imageFile1, shaderFile);
 	{
@@ -83,8 +84,7 @@ Piston::Piston(float time)
 	}
 
 	udrPiston[1]->SetStop();
-
-	udrPiston[1]->SetPosition(770.0f, -570.0f);
+	udrPiston[1]->SetPosition(-770.0f, -470.0f);
 	udrPiston[1]->SetRotation(0.0f, 180.0f, 0.0f);
 }
 
@@ -96,9 +96,9 @@ Piston::~Piston()
 
 void Piston::Update(Matrix V, Matrix P)
 {
-	Vector2 pos1 = GetPosition();
-	Vector2 pos2 = GetPosition();
-	
+	Vector2 pos1 = uprPiston[0]->GetPosition();
+	Vector2 pos2 = uprPiston[1]->GetPosition();
+
 	time += DELTA;
 
 	UINT index = 0;
@@ -106,48 +106,40 @@ void Piston::Update(Matrix V, Matrix P)
 	if (time <= 0.5f)
 	{
 		pos1.y -= 600.0f * DELTA;
-		SetPosition(pos1);
 	}
 	else if (time > 0.5f && time <= 1.0f)
 	{
 		udrPiston[0]->SetPlay(0);
 		uprPiston[0]->SetPlay(0);
-		SetPosition(pos1);
 	}
 	else if (time < 1.5f)
 	{
 		pos1.y += 600.0f * DELTA;
-		SetPosition(pos1);
 	}
 
-	else if (time >= endTime - 1.0f && time < endTime - 0.5f)
-	{
-		pos2.y += 600.0f * DELTA;
-		SetPosition(pos2);
-		index = 1;
-	}
-	else if (time >= endTime - 0.5f && time < endTime)
-	{
-		udrPiston[1]->SetPlay(0);
-		uprPiston[1]->SetPlay(0);
-		SetPosition(pos2);
-		index = 1;
-	}
-	else if (time < endTime + 0.5f)
-	{
-		pos2.y -= 600.0f * DELTA;
-		SetPosition(pos2);
-		index = 1;
-	}
+	//if (time >= endTime - 1.0f && time < endTime - 0.5f)
+	//{
+	//	pos2.y += 600.0f * DELTA;
+	//}
+	//else if (time >= endTime - 0.5f && time < endTime)
+	//{
+	//	udrPiston[1]->SetPlay(0);
+	//	uprPiston[1]->SetPlay(0);
+	//}
+	//else if (time < endTime + 0.5f)
+	//{
+	//	pos2.y -= 600.0f * DELTA;
+	//}
 
-	udrPiston[index]->SetPosition(position);
-	uprPiston[index]->SetPosition(position);
+	udrPiston[0]->SetPosition(pos1);
+	uprPiston[0]->SetPosition(pos1);
+	udrPiston[0]->Update(V, P);
+	uprPiston[0]->Update(V, P);
 
-	for (UINT i = 0; i < 2; i++)
-	{
-		udrPiston[i]->Update(V, P);
-		uprPiston[i]->Update(V, P);
-	}
+	udrPiston[1]->SetPosition(pos2);
+	uprPiston[1]->SetPosition(pos2);
+	udrPiston[1]->Update(V, P);
+	uprPiston[1]->Update(V, P);
 }
 
 void Piston::Render()
