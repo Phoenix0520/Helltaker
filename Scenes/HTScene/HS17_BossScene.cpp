@@ -51,7 +51,7 @@ HS17_BossScene::HS17_BossScene()
 	piston[1] = new Piston(6.0f);
 
 
-	//SetActive(false);
+	SetActive(false);
 	SetDisplay(false);
 
 	sceneName = "HS17_BossScene";
