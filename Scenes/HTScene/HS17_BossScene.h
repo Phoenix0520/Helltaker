@@ -13,5 +13,11 @@ public:
 
 private:
 	class Texture* background = nullptr;
+	class Texture* rect = nullptr;
+	class Texture* uprBorder = nullptr;
+	class Texture* udrBorder = nullptr;
 
+	class Animation* gear[2];
+
+	class Piston* piston[2];
 };

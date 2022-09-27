@@ -88,6 +88,7 @@
     <ClInclude Include="Util\Convert.h" />
     <ClInclude Include="Util\CSVReader.h" />
     <ClInclude Include="Util\CSVWriter.h" />
+    <ClInclude Include="Objects\BossScene\Piston.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Systems\D2D.cpp" />
@@ -155,7 +156,6 @@
     <ClCompile Include="Objects\Design\SinPyre.cpp" />
     <ClCompile Include="Objects\Design\SinSkull.cpp" />
     <ClCompile Include="Objects\OptionMenu\OptionMenu.cpp" />
-    <ClCompile Include="Objects\OptionMenu\OptionButton.cpp" />
     <ClCompile Include="Effects\LoveSign.cpp" />
     <ClCompile Include="Objects\UI\Booper.cpp" />
     <ClCompile Include="Objects\UI\Button.cpp" />
@@ -167,6 +167,8 @@
     <ClCompile Include="Util\CSVReader.cpp" />
     <ClCompile Include="Util\CSVWriter.cpp" />
     <ClCompile Include="Scenes\HTScene\HS17_BossScene.cpp" />
+    <ClCompile Include="Objects\OptionMenu\OptionButton.cpp" />
+    <ClCompile Include="Objects\BossScene\Piston.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\HLSL\Color.hlsl" />

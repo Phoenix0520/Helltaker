@@ -44,6 +44,7 @@
     <ClInclude Include="Libraries\imguiDx11.h" />
     <ClInclude Include="Libraries\imgui_impl_dx11.h" />
     <ClInclude Include="Libraries\imgui_impl_win32.h" />
+    <ClInclude Include="Objects\BossScene\Piston.h" />
     <ClInclude Include="Objects\Helltaker\Bridge.h" />
     <ClInclude Include="Objects\Helltaker\Chain.h" />
     <ClInclude Include="Objects\Helltaker\ChainDaigonal.h" />
@@ -127,6 +128,7 @@
     <ClCompile Include="Effects\Clear.cpp" />
     <ClCompile Include="Effects\Dust.cpp" />
     <ClCompile Include="Effects\LoveSign.cpp" />
+    <ClCompile Include="Objects\BossScene\Piston.cpp" />
     <ClCompile Include="Objects\Helltaker\Bridge.cpp" />
     <ClCompile Include="Objects\Helltaker\Chain.cpp" />
     <ClCompile Include="Objects\Helltaker\ChainDaigonal.cpp" />
@@ -301,7 +303,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./;../;./Components;./Objects;./Objects/UI;./Objects/Design;./Objects/OptionMenu;./Objects/Basic;./Objects/Helltaker;./Resource;./Scenes;./Scenes/HTScene;./Scenes/Lesson;./Shader;./Systems;./Base;./Base/Hard;./Base/Soft;./Effects;./Render;./Render/Animation;./Render/Graphic;./Libraries;./Libraries/FMOD;./Util;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../;./Components;./Objects;./Objects/UI;./Objects/Design;./Objects/OptionMenu;./Objects/Basic;./Objects/Helltaker;./Objects/BossScene;./Resource;./Scenes;./Scenes/HTScene;./Scenes/Lesson;./Shader;./Systems;./Base;./Base/Hard;./Base/Soft;./Effects;./Render;./Render/Animation;./Render/Graphic;./Libraries;./Libraries/FMOD;./Util;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
     </ClCompile>
