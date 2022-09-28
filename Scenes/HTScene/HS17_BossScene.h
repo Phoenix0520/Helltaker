@@ -18,6 +18,8 @@ private:
 	class Texture* udrBorder = nullptr;
 
 	class Animation* gear[2];
-
 	class Piston* piston[2];
+	class Bridge* bridge = nullptr;
+	class LifeCount* lifeCount = nullptr;
+
 };

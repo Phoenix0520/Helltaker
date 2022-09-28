@@ -3,7 +3,7 @@
 class Piston : public GameObject
 {
 public:
-	Piston(float time);
+	Piston(float x, float time);
 	~Piston();
 
 public:
@@ -14,6 +14,9 @@ public:
 private:
 	class Animation* uprPiston[2];
 	class Animation* udrPiston[2];
+	class Chain* chain = nullptr;
+	class Texture* hirSkull = nullptr;
+	class Texture* lwrSkull = nullptr;
 
 	float time = 0.0f;
 	float endTime = 0.0f;

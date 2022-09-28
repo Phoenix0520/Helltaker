@@ -60,11 +60,7 @@
     <ClInclude Include="Scenes\HTScene\HS16_JudgeScene.h" />
     <ClInclude Include="Objects\SRVManager.h" />
     <ClInclude Include="Base\Soft\Terrain.h" />
-    <ClInclude Include="Objects\Helltaker\Bridge.h" />
     <ClInclude Include="Base\Soft\Tile.h" />
-    <ClInclude Include="Objects\Helltaker\Chain.h" />
-    <ClInclude Include="Objects\Helltaker\ChainDaigonal.h" />
-    <ClInclude Include="Objects\Helltaker\ChainVH.h" />
     <ClInclude Include="Base\Soft\Collider.h" />
     <ClInclude Include="Base\Soft\clipper.hpp" />
     <ClInclude Include="Objects\Helltaker\Judge.h" />
@@ -89,6 +85,11 @@
     <ClInclude Include="Util\CSVReader.h" />
     <ClInclude Include="Util\CSVWriter.h" />
     <ClInclude Include="Objects\BossScene\Piston.h" />
+    <ClInclude Include="Objects\BossScene\LifeCount.h" />
+    <ClInclude Include="Objects\BossScene\Bridge.h" />
+    <ClInclude Include="Objects\BossScene\Chain.h" />
+    <ClInclude Include="Objects\BossScene\ChainVH.h" />
+    <ClInclude Include="Objects\BossScene\ChainDaigonal.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Systems\D2D.cpp" />
@@ -144,11 +145,7 @@
     <ClCompile Include="Scenes\HTScene\HS16_JudgeScene.cpp" />
     <ClCompile Include="Objects\SRVManager.cpp" />
     <ClCompile Include="Base\Soft\Terrain.cpp" />
-    <ClCompile Include="Objects\Helltaker\Bridge.cpp" />
     <ClCompile Include="Base\Soft\Tile.cpp" />
-    <ClCompile Include="Objects\Helltaker\Chain.cpp" />
-    <ClCompile Include="Objects\Helltaker\ChainDaigonal.cpp" />
-    <ClCompile Include="Objects\Helltaker\ChainVH.cpp" />
     <ClCompile Include="Base\Soft\Collider.cpp" />
     <ClCompile Include="Base\Soft\clipper.cpp" />
     <ClCompile Include="Objects\Helltaker\Judge.cpp" />
@@ -169,6 +166,11 @@
     <ClCompile Include="Scenes\HTScene\HS17_BossScene.cpp" />
     <ClCompile Include="Objects\OptionMenu\OptionButton.cpp" />
     <ClCompile Include="Objects\BossScene\Piston.cpp" />
+    <ClCompile Include="Objects\BossScene\LifeCount.cpp" />
+    <ClCompile Include="Objects\BossScene\Bridge.cpp" />
+    <ClCompile Include="Objects\BossScene\Chain.cpp" />
+    <ClCompile Include="Objects\BossScene\ChainVH.cpp" />
+    <ClCompile Include="Objects\BossScene\ChainDaigonal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\HLSL\Color.hlsl" />

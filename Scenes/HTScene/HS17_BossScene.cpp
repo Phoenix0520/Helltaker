@@ -1,6 +1,8 @@
 #include "framework.h"
 #include "HS17_BossScene.h"
 #include "Piston.h"
+#include "LifeCount.h"
+#include "Bridge.h"
 
 HS17_BossScene::HS17_BossScene()
 {
@@ -47,9 +49,13 @@ HS17_BossScene::HS17_BossScene()
 	gear[1]->SetPosition(770.0f, -420.0f);
 	gear[1]->SetPlay(0);
 
-	piston[0] = new Piston(6.0f);
-	piston[1] = new Piston(6.0f);
+	piston[0] = new Piston(-790.0f, 6.0f);
+	piston[1] = new Piston(790.0f, 6.0f);
+	piston[1]->SetRotation(0.0f, 180.0f, 0.0f);
 
+	lifeCount = new LifeCount();
+
+	bridge = new Bridge();
 
 	//SetActive(false);
 	SetDisplay(false);
@@ -80,6 +86,9 @@ void HS17_BossScene::Update()
 	piston[1]->Update(V, P);
 
 	udrBorder->Update(V, P);
+
+	lifeCount->Update(V, P);
+	bridge->Update(V, P);
 }
 
 void HS17_BossScene::Render()
@@ -89,12 +98,16 @@ void HS17_BossScene::Render()
 	gear[0]->Render();
 	gear[1]->Render();
 
+
 	uprBorder->Render();
 
 	piston[0]->Render();
 	piston[1]->Render();
 	
+	bridge->Render();
 	udrBorder->Render();
+
+	lifeCount->Render();
 }
 
 void HS17_BossScene::ChangeScene()
