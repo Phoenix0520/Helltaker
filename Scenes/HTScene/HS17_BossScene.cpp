@@ -16,6 +16,8 @@ HS17_BossScene::HS17_BossScene()
 
 	wstring imageFile2 = L"./Images/Boss/uprBorder.png";
 	uprBorder = new Texture(imageFile2, shaderFile);
+	imageFile2 = L"./Images/Boss/uprBorder2.png";
+	uprBorder2 = new Texture(imageFile2, shaderFile);
 	imageFile2 = L"./Images/Boss/udrBorder.png";
 	udrBorder = new Texture(imageFile2, shaderFile);
 
@@ -74,6 +76,8 @@ void HS17_BossScene::Update()
 	Matrix V = CAMERA->GetViewMatrix();
 	Matrix P = CAMERA->GetProjMatrix();
 
+	time += DELTA;
+
 	background->Update(V, P);
 	rect->Update(V, P);
 
@@ -81,6 +85,7 @@ void HS17_BossScene::Update()
 	gear[1]->Update(V, P);
 
 	uprBorder->Update(V, P);
+	uprBorder2->Update(V, P);
 
 	piston[0]->Update(V, P);
 	piston[1]->Update(V, P);
@@ -88,6 +93,12 @@ void HS17_BossScene::Update()
 	udrBorder->Update(V, P);
 
 	lifeCount->Update(V, P);
+
+	if (time >= 1.5f)
+		bridge->SetMove(true);
+	if (time >= 6.5f)
+		bridge->SetMove(false);
+
 	bridge->Update(V, P);
 }
 
@@ -105,6 +116,7 @@ void HS17_BossScene::Render()
 	piston[1]->Render();
 	
 	bridge->Render();
+	uprBorder2->Render();
 	udrBorder->Render();
 
 	lifeCount->Render();

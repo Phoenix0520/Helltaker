@@ -37,18 +37,49 @@ void Chain::Update(Matrix V, Matrix P)
 {
 	float y[3];
 	
+	if (move)
+	{
+		if (moveVal < 3.0f)
+			moveVal += DELTA * 2.0f;
+	}
+	else
+	{
+		if (moveVal > 0.0f)
+			moveVal -= DELTA * 2.0f;
+	}
+
 	for (UINT i = 0; i < 3; i++)
 	{
-		if (move)
-		{
-			float y = texture[i]->GetPosition().y + 3.0f;
-			texture[i]->SetPosition(x, y);
-		}
+		float y = texture[i]->GetPosition().y + moveVal;
+		texture[i]->SetPosition(x, y);
 
 		if (rotation == Vector3(0.0f, 180.0f, 0.0f))
 			texture[i]->SetRotation(0.0f, 0.0f, 0.0f);
 		else
 			texture[i]->SetRotation(0.0f, 180.0f, 0.0f);
+
+		Vector2 size = texture[0]->GetTextureRealSize();
+		if (texture[i]->GetPosition().y > size.y + 540.0f)
+		{
+			size.y -= 3.0f;
+			Vector2 pos;
+
+			switch (i)
+			{
+			case 0:
+				pos = texture[2]->GetPosition();
+				texture[i]->SetPosition(pos.x, pos.y - size.y);
+				break;
+			case 1:
+				pos = texture[0]->GetPosition();
+				texture[i]->SetPosition(pos.x, pos.y - size.y);
+				break;
+			case 2:
+				pos = texture[1]->GetPosition();
+				texture[i]->SetPosition(pos.x, pos.y - size.y);
+				break;
+			}
+		}
 
 		texture[i]->Update(V, P);
 	}

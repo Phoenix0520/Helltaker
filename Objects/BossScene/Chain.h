@@ -16,5 +16,7 @@ private:
 	vector<class Texture*> texture;
 
 	bool move = false;
+
+	float moveVal = 0.0f;
 	float x = 0.0f;
 };

@@ -167,6 +167,15 @@ float4 PS(PixelInput input) : SV_Target // 현재 세팅된 메인렌더타겟 을 사용하라�
             color4 /= sum;
             returnColor = color4;
             break;
+		case 13:
+			float alp = color.a * textColor.a;
+
+			color.r * (textColor.r * alp);
+			color.g * (textColor.g * alp);
+			color.b * (textColor.b * alp);
+
+			returnColor = color;
+			break;
     }
     
     if (returnColor.r == 1.0f && returnColor.g == 0.0f && returnColor.b == 1.0f)

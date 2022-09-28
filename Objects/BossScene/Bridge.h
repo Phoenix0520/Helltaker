@@ -15,8 +15,10 @@ public:
 
 private:
 	vector<class Texture*> texture;
-	
-	float time = 0.0f;
+	class Texture* effect = nullptr;
 
 	bool move = false;
+
+	float moveVal = 0.0f;
+	float time = 0.0f;
 };

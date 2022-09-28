@@ -15,6 +15,7 @@ private:
 	class Texture* background = nullptr;
 	class Texture* rect = nullptr;
 	class Texture* uprBorder = nullptr;
+	class Texture* uprBorder2 = nullptr;
 	class Texture* udrBorder = nullptr;
 
 	class Animation* gear[2];
@@ -22,4 +23,6 @@ private:
 	class Bridge* bridge = nullptr;
 	class LifeCount* lifeCount = nullptr;
 
+
+	float time = 0.0f;
 };
