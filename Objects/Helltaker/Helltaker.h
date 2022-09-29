@@ -19,6 +19,10 @@ public:
 	void Update(Matrix V, Matrix P) override;
 	void Render() override;
 	void Reset() override;
+
+	void BossUpdate(Matrix V, Matrix P);
+	void BossRender(Matrix V, Matrix P);
+	void BossReset();
 	// Update Render
 
 	void CheckTrap(int x, int y);
@@ -34,6 +38,7 @@ public:
 	
 	void ExternMoveObject(int vert, int horiz);
 	void SetHuge();
+	void SetBoss(bool val) { boss = val; }
 	bool IsAttacted();
 
 	void SetImmune(bool value) { immortal = value; }

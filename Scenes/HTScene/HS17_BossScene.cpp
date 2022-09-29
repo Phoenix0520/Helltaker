@@ -1,5 +1,7 @@
 #include "framework.h"
 #include "HS17_BossScene.h"
+#include "Helltaker.h"
+#include "HelltakerMap.h"
 #include "Piston.h"
 #include "LifeCount.h"
 #include "Bridge.h"
@@ -59,10 +61,12 @@ HS17_BossScene::HS17_BossScene()
 
 	bridge = new Bridge();
 
-	//SetActive(false);
+	SetActive(false);
 	SetDisplay(false);
 
 	sceneName = "HS17_BossScene";
+
+	helltaker = (Helltaker*)OBJMANAGER->FindObject("Helltaker");
 }
 
 HS17_BossScene::~HS17_BossScene()
@@ -77,6 +81,20 @@ void HS17_BossScene::Update()
 	Matrix P = CAMERA->GetProjMatrix();
 
 	time += DELTA;
+
+	if (DOWN('M'))
+		lifeCount->DiscardLife();
+
+	if (lifeCount->IsDead())
+	{	
+		helltaker->SetBoss(true);
+
+		lifeCount->Reset();
+		SCENEMANAGER->ChangeScene("HS00_DeadScene");
+
+		Scene* scene = SCENEMANAGER->GetScene("HS03_ChangeScene");
+		scene->SetNextScene("HS17_BossScene");
+	}
 
 	background->Update(V, P);
 	rect->Update(V, P);
@@ -96,10 +114,12 @@ void HS17_BossScene::Update()
 
 	if (time >= 1.5f)
 		bridge->SetMove(true);
-	if (time >= 6.5f)
+	if (time >= 5.0f)
 		bridge->SetMove(false);
 
 	bridge->Update(V, P);
+
+	helltaker->Update(V, P);
 }
 
 void HS17_BossScene::Render()
@@ -108,7 +128,7 @@ void HS17_BossScene::Render()
 	rect->Render();
 	gear[0]->Render();
 	gear[1]->Render();
-
+	 
 
 	uprBorder->Render();
 
@@ -120,9 +140,12 @@ void HS17_BossScene::Render()
 	udrBorder->Render();
 
 	lifeCount->Render();
+
+	helltaker->Render();
 }
 
 void HS17_BossScene::ChangeScene()
 {
 	SetActive(true);
+	HTMAP->Clear();
 }

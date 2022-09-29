@@ -44,8 +44,7 @@ void Chain::Update(Matrix V, Matrix P)
 	}
 	else
 	{
-		if (moveVal > 0.0f)
-			moveVal -= DELTA * 2.0f;
+		moveVal = 0.0f;
 	}
 
 	for (UINT i = 0; i < 3; i++)

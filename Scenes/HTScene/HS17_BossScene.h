@@ -23,6 +23,7 @@ private:
 	class Bridge* bridge = nullptr;
 	class LifeCount* lifeCount = nullptr;
 
+	class Helltaker* helltaker = nullptr;
 
 	float time = 0.0f;
 };

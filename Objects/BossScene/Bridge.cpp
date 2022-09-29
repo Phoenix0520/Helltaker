@@ -35,12 +35,14 @@ void Bridge::Update(Matrix V, Matrix P)
 	if (move)
 	{
 		if (moveVal < 3.0f)
-			moveVal += DELTA;
+			moveVal += DELTA * 2.0f;
 	}
 	else
 	{
 		if (moveVal > 0.0f)
-			moveVal -= DELTA;
+			moveVal -= DELTA * 2.0f;
+		else
+			moveVal = 0.0f;
 		
 	}
 

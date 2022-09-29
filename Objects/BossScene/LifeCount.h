@@ -12,7 +12,7 @@ public:
 	void Reset();
 
 	void DiscardLife();
-	bool IsDead() { return life[3]; }
+	bool IsDead() { return !life[3]; }
 	
 
 private:

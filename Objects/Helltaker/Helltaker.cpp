@@ -596,6 +596,18 @@ void Helltaker::Reset()
 	hugeEffect->SetActive(false);
 }
 
+void Helltaker::BossUpdate(Matrix V, Matrix P)
+{
+}
+
+void Helltaker::BossRender(Matrix V, Matrix P)
+{
+}
+
+void Helltaker::BossReset()
+{
+}
+
 void Helltaker::CheckTrap(int x, int y)
 {
 	if (HTMAP->IsTrap(x, y))

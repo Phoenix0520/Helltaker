@@ -92,8 +92,10 @@ void LifeCount::Render()
 	}
 }
 
-void LifeCount::Reset()
+void LifeCount::Reset() 
 {
+	for (UINT i = 0; i < 4; i++)
+		life[i] = true;
 }
 
 void LifeCount::DiscardLife()
