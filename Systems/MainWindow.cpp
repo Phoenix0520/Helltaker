@@ -272,7 +272,6 @@ LRESULT MainWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		Scene* scene = nullptr;
 		switch (wParam)
 		{
-
 		case VK_TAB:
 			if (visibleMap)
 			{
@@ -285,6 +284,10 @@ LRESULT MainWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 				visibleMap = true;
 			}
 			break;
+		case 'B':
+			scene = SCENEMANAGER->GetScene("HS17_BossScene");
+			if (scene)
+				SCENEMANAGER->ChangeScene("HS17_BossScene");
 		}
 
 		break;

@@ -34,19 +34,16 @@ void Bridge::Update(Matrix V, Matrix P)
 {
 	if (move)
 	{
-		if (moveVal < 3.0f)
-			moveVal += DELTA * 2.0f;
+		if (moveVal < 5.0f)
+			moveVal += DELTA * 5.0f;
 	}
 	else
 	{
 		if (moveVal > 0.0f)
-			moveVal -= DELTA * 2.0f;
+			moveVal -= DELTA * 2.5f;
 		else
 			moveVal = 0.0f;
-		
 	}
-
-	
 
 	for (UINT i = 0; i < texture.size(); i++)
 	{

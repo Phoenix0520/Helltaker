@@ -25,5 +25,9 @@ private:
 
 	class Helltaker* helltaker = nullptr;
 
+	bool working = false;
+
 	float time = 0.0f;
+	float endTime = 10.0f;
+	float moveVal = 0.0f;
 };

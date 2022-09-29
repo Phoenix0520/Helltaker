@@ -53,8 +53,8 @@ HS17_BossScene::HS17_BossScene()
 	gear[1]->SetPosition(770.0f, -420.0f);
 	gear[1]->SetPlay(0);
 
-	piston[0] = new Piston(-790.0f, 6.0f);
-	piston[1] = new Piston(790.0f, 6.0f);
+	piston[0] = new Piston(-790.0f, endTime);
+	piston[1] = new Piston(790.0f, endTime);
 	piston[1]->SetRotation(0.0f, 180.0f, 0.0f);
 
 	lifeCount = new LifeCount();
@@ -85,6 +85,13 @@ void HS17_BossScene::Update()
 	if (DOWN('M'))
 		lifeCount->DiscardLife();
 
+	if (DOWN('R'))
+	{
+		Scene* scene = SCENEMANAGER->GetScene("HS03_ChangeScene");
+		scene->SetNextScene("HS17_BossScene");
+		SCENEMANAGER->ChangeScene("HS03_ChangeScene");
+	}
+
 	if (lifeCount->IsDead())
 	{	
 		helltaker->SetBoss(true);
@@ -113,12 +120,42 @@ void HS17_BossScene::Update()
 	lifeCount->Update(V, P);
 
 	if (time >= 1.5f)
+	{
+		working = true;
 		bridge->SetMove(true);
-	if (time >= 5.0f)
+	}
+	if (time >= endTime - 1.0f)
+	{
+		working = false;
 		bridge->SetMove(false);
+	}
 
 	bridge->Update(V, P);
 
+	Vector2 pPos = helltaker->GetPosition();
+
+	if (pPos.y > 200.0f || pPos.y < -400.0f)
+	{
+		while (!lifeCount->IsDead())
+			lifeCount->DiscardLife();
+	}
+
+	if (working)
+	{
+		if (moveVal < 150.0f)
+			moveVal += 150.0f * DELTA;
+	}
+	else
+	{
+		if (moveVal > 0.0f)
+			moveVal -= 75.0f * DELTA;
+		else
+			moveVal = 0.0f;
+	}
+
+	pPos.y += moveVal * DELTA;
+
+	helltaker->SetPosition(pPos);
 	helltaker->Update(V, P);
 }
 
@@ -148,4 +185,11 @@ void HS17_BossScene::ChangeScene()
 {
 	SetActive(true);
 	HTMAP->Clear();
+	time = 0.0f;
+	lifeCount->Reset();
+	helltaker->SetPosition(0.0f, -100.0f);
+	helltaker->SetBoss(true);
+	
+	piston[0]->Reset();
+	piston[1]->Reset();
 }

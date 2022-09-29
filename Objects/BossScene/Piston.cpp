@@ -5,6 +5,7 @@
 Piston::Piston(float x, float time)
 {
 	endTime = time;
+	this->x = x;
 
 	if (time < 4.0f)
 		time = 6.0f;
@@ -147,25 +148,28 @@ void Piston::Update(Matrix V, Matrix P)
 	{
 		chain->SetMove(true);
 	}
-
-	if (time >= (endTime - 1.0f) && time < (endTime - 0.5f))
+	else if (time >= endTime - 2.0f && time < endTime - 1.5f)
+	{
+		chain->SetMove(false);
+		cout << "¾ö\n";
+	}
+	else if (time >= endTime - 1.0f && time < endTime - 0.5f)
 	{
 		pos2.y += 400.0f * DELTA;
 	}
-	else if (time >= (endTime - 0.5f) && time < endTime)
+	else if (time >= endTime - 0.5f && time < endTime)
 	{
 		udrPiston[0]->SetPlay(0);
 		udrPiston[1]->SetPlay(0);
 	}
-	else if (time >= endTime && time < (endTime + 0.5f))
+	else if (time >= endTime && time < endTime + 0.5f)
 	{
 		pos2.y -= 400.0f * DELTA;
 		pos3.y -= 400.0f * DELTA;
 	}
-	else if (time >= (endTime + 0.5f))
+	/*else if (time >= (endTime + 0.5f))
 	{
-		chain->SetMove(false);
-	}
+	}*/
 
 
 	uprPiston[0]->SetPosition(pos1);
@@ -226,4 +230,15 @@ void Piston::Reset()
 	udrPiston[1]->SetStop();
 
 	time = 0.0f;
+
+	if (x > 0)
+	{
+		lwrSkull->SetPosition(x - 100.0f, -170.0f);
+		hirSkull->SetPosition(x - 100.0f, -170.0f);
+	}
+	else
+	{
+		lwrSkull->SetPosition(x + 100.0f, -170.0f);
+		hirSkull->SetPosition(x + 100.0f, -170.0f);
+	}
 }

@@ -18,6 +18,7 @@ private:
 	class Texture* hirSkull = nullptr;
 	class Texture* lwrSkull = nullptr;
 
+	float x = 0.0f;
 	float time = 0.0f;
 	float endTime = 0.0f;
 

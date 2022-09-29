@@ -114,6 +114,12 @@ Helltaker::~Helltaker()
 
 void Helltaker::Update(Matrix V, Matrix P)//키 입력과 관련된 동작들을 구현한다.
 {
+	if (boss)
+	{
+		BossUpdate(V, P);
+		return;
+	}
+
 	if (HTMAP->GetSizeX() == 0 || HTMAP->GetSizeY() == 0)
 		return;
 
@@ -559,6 +565,12 @@ void Helltaker::MoveObject(Direction direction, Vector2& position)
 
 void Helltaker::Render()
 {
+	if (boss)
+	{
+		BossRender();
+		return;
+	}
+
 	if (HTMAP->GetSizeX() == 0 || HTMAP->GetSizeY() == 0)
 		return;
 
@@ -571,6 +583,12 @@ void Helltaker::Render()
 
 void Helltaker::Reset()
 {
+	if (boss)
+	{
+		BossReset();
+		return;
+	}
+
 	// animation Reset
 	animation->UpdateColorBuffer(Color(), 0, 0, 0, 0);
 
@@ -598,10 +616,110 @@ void Helltaker::Reset()
 
 void Helltaker::BossUpdate(Matrix V, Matrix P)
 {
+	Vector2 pos = GetPosition();
+
+	if (state != State::WALK)
+	{
+		if (PRESS(VK_CONTROL));
+		else if (DOWN('W') || DOWN(VK_UP))
+		{
+			movePos = Vector2(0.0f, 10.0f);
+			state = State::WALK;
+		}
+		else if (DOWN('S') || DOWN(VK_DOWN))
+		{
+			movePos = Vector2(0.0f, -10.0f);
+			state = State::WALK;
+		}
+		else if (DOWN('A') || DOWN(VK_LEFT))
+		{
+			if (pos.x > -300.0f)
+			{
+				movePos = Vector2(-10.0f, 0.0f);	// 10 pixel
+				SetRotation(0.0f, 180.0f, 0.0f);
+				state = State::WALK;
+			}
+		}
+		else if (DOWN('D') || DOWN(VK_RIGHT))
+		{
+			if (pos.x < 300.0f)
+			{
+				movePos = Vector2(10.0f, 0.0f);
+				SetRotation(0.0f, 0.0f, 0.0f);
+				state = State::WALK;
+			}
+		}
+	}
+	else if (state == State::WALK)
+	{
+		cout << "Walking\n";
+
+		kickEffect->SetActive(false);
+
+		time += DELTA;
+
+		if (!ISPLAYING("Move"))
+			PLAYSOUND("Move", sfxSize);
+
+		if (time > 0.01f)
+		{
+			moveCount++;
+			time = 0.0f;
+
+			if (moveCount <= 10)
+			{
+				pos.x += movePos.x;
+				pos.y += movePos.y;
+			}
+			else
+			{
+				STOPSOUND("Move");
+
+				state = State::IDLE;
+				dustEffect->SetActive(false);
+				moveCount = 0;
+			}
+		}
+	}
+
+	SetPosition(pos);
+
+	cout << position.x << " , " << position.y << endl;
+	animation->SetPosition(position);
+	animation->SetRotation(rotation);
+	animation->Update(V, P);
+
+	dustEffect->Update(V, P);
+
+	collider->SetPosition(position);
+	collider->SetScale(animation->GetTextureRealSize() - Vector2(10.0f, 40.0f));
+	collider->Update(V, P);
 }
 
-void Helltaker::BossRender(Matrix V, Matrix P)
+void Helltaker::BossMove(char val)
 {
+	switch (val)
+	{
+	case VK_RIGHT:
+		
+		break;
+	case VK_LEFT:
+		
+		break;
+	case VK_UP:
+		
+		break;
+	case VK_DOWN:
+		
+		break;
+	}
+}
+
+void Helltaker::BossRender()
+{
+	animation->Render();
+	dustEffect->Render();
+	collider->Render();
 }
 
 void Helltaker::BossReset()

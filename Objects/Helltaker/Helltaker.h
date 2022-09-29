@@ -21,7 +21,8 @@ public:
 	void Reset() override;
 
 	void BossUpdate(Matrix V, Matrix P);
-	void BossRender(Matrix V, Matrix P);
+	void BossMove(char val);
+	void BossRender();
 	void BossReset();
 	// Update Render
 
