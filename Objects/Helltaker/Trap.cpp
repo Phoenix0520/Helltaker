@@ -39,7 +39,7 @@ Trap::Trap()
 		wstring str = L"./Images/Trap/Trap.png";
 
 		float x = 0.0f;
-		for (int i = 1; i <= 6; i++)
+		for (int i = 1; i <= 7; i++)
 		{
 			clip->AddFrame(texture, str, x, 0.0f, x + 100.0f, 220.0f, 0.03f);
 			x += 100.0f;

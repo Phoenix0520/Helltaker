@@ -44,6 +44,7 @@
     <ClInclude Include="Libraries\imguiDx11.h" />
     <ClInclude Include="Libraries\imgui_impl_dx11.h" />
     <ClInclude Include="Libraries\imgui_impl_win32.h" />
+    <ClInclude Include="Objects\BossScene\BossTrap.h" />
     <ClInclude Include="Objects\BossScene\Bridge.h" />
     <ClInclude Include="Objects\BossScene\LifeCount.h" />
     <ClInclude Include="Objects\BossScene\Piston.h" />
@@ -129,6 +130,7 @@
     <ClCompile Include="Effects\Clear.cpp" />
     <ClCompile Include="Effects\Dust.cpp" />
     <ClCompile Include="Effects\LoveSign.cpp" />
+    <ClCompile Include="Objects\BossScene\BossTrap.cpp" />
     <ClCompile Include="Objects\BossScene\Bridge.cpp" />
     <ClCompile Include="Objects\BossScene\LifeCount.cpp" />
     <ClCompile Include="Objects\BossScene\Piston.cpp" />

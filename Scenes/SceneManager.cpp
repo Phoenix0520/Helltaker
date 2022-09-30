@@ -27,20 +27,40 @@ SceneManager::SceneManager()
 {
 	start = GetTickCount();
 
-	optionMenu = new OptionMenu();
+	//optionMenu = new OptionMenu();
 
-	scenes.push_back(new HS01_IntroScene());
-	//scenes.push_back(new HS17_BossScene());
+	//scenes.push_back(new HS01_IntroScene());
+
+	// Helltaker
+	{
+		Helltaker* helltaker = new Helltaker();
+		OBJMANAGER->AddObject("Helltaker", helltaker);
+	}
+
+	for (int i = 1; i < 32; i++)
+	{
+		string str = "Trap" + to_string(i);
+		if (!OBJMANAGER->FindObject(str))
+		{
+			Trap* trap = new Trap();
+			OBJMANAGER->AddObject(str, trap);
+		}
+	}
+
+	scenes.push_back(new HS00_DeadScene());
+	scenes.push_back(new HS03_ChangeScene());
+	scenes.push_back(new HS17_BossScene());
+	//SCENEMANAGER->ChangeScene("HS17_BossScene");
 
 	//CreateObject();
 	//ThreadStart1();
 
-	thread t0(bind(&SceneManager::CreateObject, this));
-	t0.detach();
+	//thread t0(bind(&SceneManager::CreateObject, this));
+	//t0.detach();
 	//t0.join();
 
-	thread t1(bind(&SceneManager::ThreadStart1, this));
-	t1.detach();
+	//thread t1(bind(&SceneManager::ThreadStart1, this));
+	//t1.detach();
 	//t1.join();
 
 	//thread t2(bind(&SceneManager::ThreadStart2, this));
@@ -93,7 +113,6 @@ void SceneManager::Update()
 						pause = true;
 				}
 			}
-
 
 			scenes[i]->Update();
 

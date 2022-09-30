@@ -12,6 +12,7 @@ public:
 	void Reset();
 
 	void SetMove(bool val) { move = val; }
+	float GetMoveVal() { return moveVal; }
 
 private:
 	vector<class Texture*> texture;

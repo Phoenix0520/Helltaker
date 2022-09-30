@@ -148,12 +148,13 @@ void Piston::Update(Matrix V, Matrix P)
 	{
 		chain->SetMove(true);
 	}
-	else if (time >= endTime - 2.0f && time < endTime - 1.5f)
+
+	if (time >= endTime - 1.5f)
 	{
 		chain->SetMove(false);
-		cout << "¾ö\n";
 	}
-	else if (time >= endTime - 1.0f && time < endTime - 0.5f)
+
+	if (time >= endTime - 1.0f && time < endTime - 0.5f)
 	{
 		pos2.y += 400.0f * DELTA;
 	}

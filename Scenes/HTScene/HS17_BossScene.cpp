@@ -5,6 +5,8 @@
 #include "Piston.h"
 #include "LifeCount.h"
 #include "Bridge.h"
+#include "Trap.h"
+#include "ChainVH.h"
 
 HS17_BossScene::HS17_BossScene()
 {
@@ -61,12 +63,16 @@ HS17_BossScene::HS17_BossScene()
 
 	bridge = new Bridge();
 
-	SetActive(false);
+	chainVH = new ChainVH();
+
+	//SetActive(false);
 	SetDisplay(false);
 
 	sceneName = "HS17_BossScene";
 
 	helltaker = (Helltaker*)OBJMANAGER->FindObject("Helltaker");
+
+	ChangeScene();
 }
 
 HS17_BossScene::~HS17_BossScene()
@@ -103,6 +109,12 @@ void HS17_BossScene::Update()
 		scene->SetNextScene("HS17_BossScene");
 	}
 
+	if (time > 3.0f);
+	{
+		for (UINT i = 0; i < 28; i++)
+			traps[i]->SetActive(true);
+	}
+
 	background->Update(V, P);
 	rect->Update(V, P);
 
@@ -134,7 +146,7 @@ void HS17_BossScene::Update()
 
 	Vector2 pPos = helltaker->GetPosition();
 
-	if (pPos.y > 200.0f || pPos.y < -400.0f)
+	if (pPos.y > 180.0f || pPos.y < -300.0f)
 	{
 		while (!lifeCount->IsDead())
 			lifeCount->DiscardLife();
@@ -157,6 +169,19 @@ void HS17_BossScene::Update()
 
 	helltaker->SetPosition(pPos);
 	helltaker->Update(V, P);
+
+	for (UINT i = 0; i < traps.size(); i++)
+	{
+		if (traps[i])
+			traps[i]->Update(V, P);
+	}
+
+	MoveingTrap();
+
+	if (DOWN('G'))
+		chainVH->Reset();
+
+	chainVH->Update(V, P);
 }
 
 void HS17_BossScene::Render()
@@ -173,12 +198,21 @@ void HS17_BossScene::Render()
 	piston[1]->Render();
 	
 	bridge->Render();
+
+	for (UINT i = 0; i < traps.size(); i++)
+	{
+		if (traps[i])
+			traps[i]->Render();
+	}
+
 	uprBorder2->Render();
 	udrBorder->Render();
 
 	lifeCount->Render();
 
 	helltaker->Render();
+
+	chainVH->Render();
 }
 
 void HS17_BossScene::ChangeScene()
@@ -192,4 +226,93 @@ void HS17_BossScene::ChangeScene()
 	
 	piston[0]->Reset();
 	piston[1]->Reset();
+
+	for (UINT i = 0; i < 28; i++)
+	{
+		Trap* trap = (Trap*)OBJMANAGER->FindObject("Trap" + to_string(i + 1));
+		traps.push_back(trap);
+	}
+
+	float x = -300.0f;
+	for (UINT i = 0; i < 7; i++)
+	{
+		if (!traps[27])
+			return;
+
+		traps[i]->SetPosition(x, 330.0f);
+		traps[i]->SetActive(false);
+		traps[i + 7]->SetPosition(x, 230.0f);
+
+		traps[i + 14]->SetPosition(x, -280.0f);
+		traps[i + 14]->SetActive(false);
+		traps[i + 21]->SetPosition(x, -380.0f);
+		x += 100.0f;
+	}
+}
+
+void HS17_BossScene::MoveingTrap()
+{
+	static bool stop = false;
+
+	if (DOWN('X'))
+		stop = true;
+	if (DOWN('C'))
+		stop = false;
+
+	if (stop)
+		return;
+
+	float x = -300.0f;
+
+	for (UINT i = 0; i < 14; i++)
+	{
+		Vector2 pos = traps[i]->GetPosition();
+
+		if (pos.y > 230.0f)
+		{
+			traps[i]->SetState(2);
+		}
+
+		if (pos.y > 330.0f)
+		{
+			pos.y = 130.0f;
+			traps[i]->SetState(3);
+		}
+
+		{
+			pos.y += bridge->GetMoveVal();
+			traps[i]->SetPosition(pos);
+		}
+
+		x += 100.0f;
+
+		if (i == 6)
+			x = 0.0f;
+	}
+
+	for (UINT i = 14; i < 28; i++)
+	{
+		Vector2 pos = traps[i]->GetPosition();
+
+		if (pos.y > -310.0f)
+		{
+			traps[i]->SetState(2);
+		}
+
+		if (pos.y > -280.0f)
+		{
+			pos.y = -480.0f;
+			traps[i]->SetState(3);
+		}
+
+		{
+			pos.y += bridge->GetMoveVal();
+			traps[i]->SetPosition(pos);
+		}
+
+		x += 100.0f;
+
+		if (i == 21)
+			x = 0.0f;
+	}
 }

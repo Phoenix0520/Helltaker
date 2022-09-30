@@ -270,24 +270,26 @@ LRESULT MainWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 	case WM_KEYDOWN:
 	{
 		Scene* scene = nullptr;
+
 		switch (wParam)
 		{
 		case VK_TAB:
 			if (visibleMap)
-			{
-				visibleCollider = false;
 				visibleMap = false;
-			}
 			else
-			{
-				visibleCollider = true;
 				visibleMap = true;
-			}
+			break;
+		case VK_F1:
+			if (visibleCollider)
+				visibleCollider = false;
+			else
+				visibleCollider = true;
 			break;
 		case 'B':
 			scene = SCENEMANAGER->GetScene("HS17_BossScene");
 			if (scene)
 				SCENEMANAGER->ChangeScene("HS17_BossScene");
+			break;
 		}
 
 		break;

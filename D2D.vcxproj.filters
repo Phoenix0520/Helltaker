@@ -90,6 +90,7 @@
     <ClInclude Include="Objects\BossScene\Chain.h" />
     <ClInclude Include="Objects\BossScene\ChainVH.h" />
     <ClInclude Include="Objects\BossScene\ChainDaigonal.h" />
+    <ClInclude Include="Objects\BossScene\BossTrap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Systems\D2D.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Objects\BossScene\Chain.cpp" />
     <ClCompile Include="Objects\BossScene\ChainVH.cpp" />
     <ClCompile Include="Objects\BossScene\ChainDaigonal.cpp" />
+    <ClCompile Include="Objects\BossScene\BossTrap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\HLSL\Color.hlsl" />

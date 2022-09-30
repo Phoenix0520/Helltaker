@@ -652,8 +652,6 @@ void Helltaker::BossUpdate(Matrix V, Matrix P)
 	}
 	else if (state == State::WALK)
 	{
-		cout << "Walking\n";
-
 		kickEffect->SetActive(false);
 
 		time += DELTA;
@@ -684,7 +682,7 @@ void Helltaker::BossUpdate(Matrix V, Matrix P)
 
 	SetPosition(pos);
 
-	cout << position.x << " , " << position.y << endl;
+	//cout << position.x << " , " << position.y << endl;
 	animation->SetPosition(position);
 	animation->SetRotation(rotation);
 	animation->Update(V, P);

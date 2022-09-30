@@ -14,8 +14,8 @@ Bridge::Bridge()
 	float y = texture[0]->GetTextureRealSize().y;
 
 	texture[0]->SetPosition(0.0f, 0.0f);
-	texture[1]->SetPosition(0.0f, -y);
-	texture[2]->SetPosition(0.0f, -y * 2);
+	texture[1]->SetPosition(0.0f, -y + 3.0f);
+	texture[2]->SetPosition(0.0f, -y * 2 + 6.0f);
 
 	effect = new Texture(imageFile2, shaderFile);
 	effect->SetPosition(0.0f, -20.0f);
@@ -60,15 +60,15 @@ void Bridge::Update(Matrix V, Matrix P)
 			{
 			case 0:
 				pos = texture[2]->GetPosition();
-				texture[i]->SetPosition(pos.x, pos.y - size.y);
+				texture[i]->SetPosition(pos.x, pos.y - size.y + 3.0f);
 				break;
 			case 1:
 				pos = texture[0]->GetPosition();
-				texture[i]->SetPosition(pos.x, pos.y - size.y);
+				texture[i]->SetPosition(pos.x, pos.y - size.y + 3.0f);
 				break;
 			case 2:
 				pos = texture[1]->GetPosition();
-				texture[i]->SetPosition(pos.x, pos.y - size.y);
+				texture[i]->SetPosition(pos.x, pos.y - size.y + 3.0f);
 				break;
 			}
 		}
@@ -89,7 +89,7 @@ void Bridge::Render()
 
 	if (DOWN('Q'))
 		gim = true;
-	if (DOWN('W'))
+	if (DOWN('E'))
 		gim = false;
 
 	if (gim)

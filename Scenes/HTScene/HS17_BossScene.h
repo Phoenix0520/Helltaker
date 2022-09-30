@@ -11,19 +11,23 @@ public:
 	void Render();
 	void ChangeScene();
 
+	void MoveingTrap();
+
 private:
-	class Texture* background = nullptr;
-	class Texture* rect = nullptr;
-	class Texture* uprBorder = nullptr;
-	class Texture* uprBorder2 = nullptr;
-	class Texture* udrBorder = nullptr;
-
+	class Texture* background	= nullptr;
+	class Texture* rect			= nullptr;
+	class Texture* uprBorder	= nullptr;
+	class Texture* uprBorder2	= nullptr;
+	class Texture* udrBorder	= nullptr;
 	class Animation* gear[2];
-	class Piston* piston[2];
-	class Bridge* bridge = nullptr;
-	class LifeCount* lifeCount = nullptr;
 
-	class Helltaker* helltaker = nullptr;
+	class Piston*		piston[2];
+	class Bridge*		bridge		= nullptr;
+	class LifeCount*	lifeCount	= nullptr;
+	class Helltaker*	helltaker	= nullptr;
+	class ChainVH*		chainVH		= nullptr;
+
+	vector<class Trap*> traps;
 
 	bool working = false;
 
