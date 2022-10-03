@@ -128,7 +128,6 @@ typedef D3DXMATRIX	Matrix;
 #include "ObjectManager.h"
 #include "SRVManager.h"
 #include "GameObject.h"
-#include "Terrain.h"
 #include "Collider.h"
 #include "Convert.h"
 #include "CSVReader.h"

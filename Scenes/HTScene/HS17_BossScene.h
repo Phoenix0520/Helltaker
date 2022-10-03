@@ -12,6 +12,12 @@ public:
 	void ChangeScene();
 
 	void MoveingTrap();
+	void SetPhase();
+
+	void PushChain(int type, int val);
+	//void Activate(float time);
+	//void ChainAttacking(int index);
+	void DiscardLife();
 
 private:
 	class Texture* background	= nullptr;
@@ -25,13 +31,21 @@ private:
 	class Bridge*		bridge		= nullptr;
 	class LifeCount*	lifeCount	= nullptr;
 	class Helltaker*	helltaker	= nullptr;
-	class ChainVH*		chainVH		= nullptr;
-
+	
 	vector<class Trap*> traps;
 
+	class ChainVH* chainVH = nullptr;
+	class BossManager* manager = nullptr;
+	//vector<bool> chainWork;
+	//vector<bool> timeRemain;
+	
 	bool working = false;
+	bool attacked = false;
 
 	float time = 0.0f;
-	float endTime = 10.0f;
+	float ctime = 0.0f;
+	float endTime = 29.5f;
 	float moveVal = 0.0f;
+
+	UINT push = 0;
 };

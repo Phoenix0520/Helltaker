@@ -1,6 +1,6 @@
 #pragma once
 
-class Helltaker final : public GameObject
+class Helltaker : public GameObject
 {
 public:
 	Helltaker();
@@ -41,6 +41,7 @@ public:
 	void SetHuge();
 	void SetBoss(bool val) { boss = val; }
 	bool IsAttacted();
+	void Attacked();
 
 	void SetImmune(bool value) { immortal = value; }
 	bool GetImmune() { return immortal; }

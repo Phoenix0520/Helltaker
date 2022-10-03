@@ -14,7 +14,7 @@ LifeCount::LifeCount()
 
 	for (UINT i = 0; i < 4; i++)
 	{
-		texture[i]->SetOffset(208.0f, 0.0f);
+		texture[i]->SetOffset(207.0f, 0.0f);
 		texture[i]->SetOffsetSize(207.0f, 100.0f);
 	
 		fire[i] = new Animation(imageFile2, shaderFile);
@@ -70,7 +70,7 @@ void LifeCount::Update(Matrix V, Matrix P)
 		if (life[i])
 		{
 			fire[i]->Update(V, P);
-			texture[i]->SetOffset(208.0f, 0.0f);
+			texture[i]->SetOffset(207.0f, 0.0f);
 		}
 		else
 			texture[i]->SetOffset(0.0f, 0.0f);

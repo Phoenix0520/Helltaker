@@ -7,32 +7,24 @@ public:
 	~ChainVH();
 
 public:
-	enum Angle
-	{
-		VERTICAL = 0,
-		HORIZONTAL
-	};
-
-public:
 	void Update(Matrix V, Matrix P) override;
 	void Render() override;
 	void Reset() override;
 
-	void SetPosByXY(int x, int y) { pos = Vector2(0.0f, 0.0f); }
-	void SetVertical() { angle = VERTICAL; }
-	void SetHorizontal() { angle = HORIZONTAL; }
+	void SetPosByID(int id);
 
-	UINT GetAngle() { return (UINT)angle; }
+	//void PushChain(int index, int type, int val);
+
 	bool IsAttacking() { return attacking; }
 
 private:
-	class Texture* texture = nullptr;
-
-	Vector2 pos = Vector2(0.0f, 0.0f);
-
-	Angle angle = VERTICAL;
-	
+	class Texture* texture = nullptr; 
+	//UINT activated;
 	bool attacking = false;
+	
+	//int actIndex = 0;
+
 	float time = 0.0f;
+
 
 };

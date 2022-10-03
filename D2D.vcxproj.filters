@@ -59,10 +59,7 @@
     <ClInclude Include="Scenes\HTScene\HS15_Chapter09.h" />
     <ClInclude Include="Scenes\HTScene\HS16_JudgeScene.h" />
     <ClInclude Include="Objects\SRVManager.h" />
-    <ClInclude Include="Base\Soft\Terrain.h" />
-    <ClInclude Include="Base\Soft\Tile.h" />
     <ClInclude Include="Base\Soft\Collider.h" />
-    <ClInclude Include="Base\Soft\clipper.hpp" />
     <ClInclude Include="Objects\Helltaker\Judge.h" />
     <ClInclude Include="Objects\Design\SinPistone.h" />
     <ClInclude Include="Objects\Design\SinPyre.h" />
@@ -91,6 +88,7 @@
     <ClInclude Include="Objects\BossScene\ChainVH.h" />
     <ClInclude Include="Objects\BossScene\ChainDaigonal.h" />
     <ClInclude Include="Objects\BossScene\BossTrap.h" />
+    <ClInclude Include="Objects\BossScene\BossManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Systems\D2D.cpp" />
@@ -145,10 +143,7 @@
     <ClCompile Include="Scenes\HTScene\HS15_Chapter09.cpp" />
     <ClCompile Include="Scenes\HTScene\HS16_JudgeScene.cpp" />
     <ClCompile Include="Objects\SRVManager.cpp" />
-    <ClCompile Include="Base\Soft\Terrain.cpp" />
-    <ClCompile Include="Base\Soft\Tile.cpp" />
     <ClCompile Include="Base\Soft\Collider.cpp" />
-    <ClCompile Include="Base\Soft\clipper.cpp" />
     <ClCompile Include="Objects\Helltaker\Judge.cpp" />
     <ClCompile Include="Objects\Design\SinPistone.cpp" />
     <ClCompile Include="Objects\Design\SinPyre.cpp" />
@@ -173,6 +168,7 @@
     <ClCompile Include="Objects\BossScene\ChainVH.cpp" />
     <ClCompile Include="Objects\BossScene\ChainDaigonal.cpp" />
     <ClCompile Include="Objects\BossScene\BossTrap.cpp" />
+    <ClCompile Include="Objects\BossScene\BossManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\HLSL\Color.hlsl" />

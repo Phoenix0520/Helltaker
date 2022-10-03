@@ -23,14 +23,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Base\Hard\Camera.h" />
-    <ClInclude Include="Base\Soft\clipper.hpp" />
     <ClInclude Include="Base\Soft\Collider.h" />
     <ClInclude Include="Base\Soft\GameObject.h" />
     <ClInclude Include="Base\Hard\Keyboard.h" />
     <ClInclude Include="Base\Hard\Mouse.h" />
     <ClInclude Include="Base\Soft\Scene.h" />
-    <ClInclude Include="Base\Soft\Terrain.h" />
-    <ClInclude Include="Base\Soft\Tile.h" />
     <ClInclude Include="Components\framework.h" />
     <ClInclude Include="Components\resource.h" />
     <ClInclude Include="Components\SceneList.h" />
@@ -44,6 +41,7 @@
     <ClInclude Include="Libraries\imguiDx11.h" />
     <ClInclude Include="Libraries\imgui_impl_dx11.h" />
     <ClInclude Include="Libraries\imgui_impl_win32.h" />
+    <ClInclude Include="Objects\BossScene\BossManager.h" />
     <ClInclude Include="Objects\BossScene\BossTrap.h" />
     <ClInclude Include="Objects\BossScene\Bridge.h" />
     <ClInclude Include="Objects\BossScene\LifeCount.h" />
@@ -119,10 +117,7 @@
     <ClCompile Include="Base\Hard\Camera.cpp" />
     <ClCompile Include="Base\Hard\Keyboard.cpp" />
     <ClCompile Include="Base\Hard\Mouse.cpp" />
-    <ClCompile Include="Base\Soft\clipper.cpp" />
     <ClCompile Include="Base\Soft\Collider.cpp" />
-    <ClCompile Include="Base\Soft\Terrain.cpp" />
-    <ClCompile Include="Base\Soft\Tile.cpp" />
     <ClCompile Include="Components\framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
@@ -130,6 +125,7 @@
     <ClCompile Include="Effects\Clear.cpp" />
     <ClCompile Include="Effects\Dust.cpp" />
     <ClCompile Include="Effects\LoveSign.cpp" />
+    <ClCompile Include="Objects\BossScene\BossManager.cpp" />
     <ClCompile Include="Objects\BossScene\BossTrap.cpp" />
     <ClCompile Include="Objects\BossScene\Bridge.cpp" />
     <ClCompile Include="Objects\BossScene\LifeCount.cpp" />

@@ -625,11 +625,15 @@ void Helltaker::BossUpdate(Matrix V, Matrix P)
 		{
 			movePos = Vector2(0.0f, 10.0f);
 			state = State::WALK;
+			dustEffect->SetPosition(position);
+			dustEffect->SetActive(true);
 		}
 		else if (DOWN('S') || DOWN(VK_DOWN))
 		{
 			movePos = Vector2(0.0f, -10.0f);
 			state = State::WALK;
+			dustEffect->SetPosition(position);
+			dustEffect->SetActive(true);
 		}
 		else if (DOWN('A') || DOWN(VK_LEFT))
 		{
@@ -638,6 +642,8 @@ void Helltaker::BossUpdate(Matrix V, Matrix P)
 				movePos = Vector2(-10.0f, 0.0f);	// 10 pixel
 				SetRotation(0.0f, 180.0f, 0.0f);
 				state = State::WALK;
+				dustEffect->SetPosition(position);
+				dustEffect->SetActive(true);
 			}
 		}
 		else if (DOWN('D') || DOWN(VK_RIGHT))
@@ -647,6 +653,8 @@ void Helltaker::BossUpdate(Matrix V, Matrix P)
 				movePos = Vector2(10.0f, 0.0f);
 				SetRotation(0.0f, 0.0f, 0.0f);
 				state = State::WALK;
+				dustEffect->SetPosition(position);
+				dustEffect->SetActive(true);
 			}
 		}
 	}
@@ -689,6 +697,21 @@ void Helltaker::BossUpdate(Matrix V, Matrix P)
 
 	dustEffect->Update(V, P);
 
+	if (hugeEffect->IsActive())
+	{
+		bloodTime += DELTA;
+
+		if (bloodTime >= 0.5f)
+			bloodTime = 0.0f;
+
+		Color color = Color(0.8f, 0.0f, 0.0f, 1.0f);
+
+		animation->UpdateColorBuffer(color, 5, 0.5f - bloodTime, 0.0f, 0.0f);
+	}
+	else
+		animation->UpdateColorBuffer(Color(), 0, 0.0f, 0.0f, 0.0f);
+	hugeEffect->Update(V, P);
+
 	collider->SetPosition(position);
 	collider->SetScale(animation->GetTextureRealSize() - Vector2(10.0f, 40.0f));
 	collider->Update(V, P);
@@ -716,12 +739,14 @@ void Helltaker::BossMove(char val)
 void Helltaker::BossRender()
 {
 	animation->Render();
+	hugeEffect->Render();
 	dustEffect->Render();
 	collider->Render();
 }
 
 void Helltaker::BossReset()
 {
+	hugeEffect->Reset();
 }
 
 void Helltaker::CheckTrap(int x, int y)
@@ -768,6 +793,15 @@ void Helltaker::SetHuge()
 bool Helltaker::IsAttacted()
 {
 	return hugeEffect->IsActive();
+}
+
+void Helltaker::Attacked()
+{
+	SetHuge();
+	hugeEffect->SetState(1); 
+
+	if (!ISPLAYING("TRAP"))
+		PLAYSOUND("TRAP", sfxSize);
 }
 
 void Helltaker::ExternMoveObject(int vert, int horiz)

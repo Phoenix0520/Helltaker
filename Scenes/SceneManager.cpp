@@ -16,6 +16,7 @@
 #include "Star.h"
 #include "Clear.h"
 #include "LoveSign.h"
+#include "ChainVH.h"
 
 long start;
 
@@ -31,29 +32,8 @@ SceneManager::SceneManager()
 
 	//scenes.push_back(new HS01_IntroScene());
 
-	// Helltaker
-	{
-		Helltaker* helltaker = new Helltaker();
-		OBJMANAGER->AddObject("Helltaker", helltaker);
-	}
-
-	for (int i = 1; i < 32; i++)
-	{
-		string str = "Trap" + to_string(i);
-		if (!OBJMANAGER->FindObject(str))
-		{
-			Trap* trap = new Trap();
-			OBJMANAGER->AddObject(str, trap);
-		}
-	}
-
-	scenes.push_back(new HS00_DeadScene());
-	scenes.push_back(new HS03_ChangeScene());
-	scenes.push_back(new HS17_BossScene());
-	//SCENEMANAGER->ChangeScene("HS17_BossScene");
-
 	//CreateObject();
-	//ThreadStart1();
+	ThreadStart2();
 
 	//thread t0(bind(&SceneManager::CreateObject, this));
 	//t0.detach();
@@ -166,7 +146,6 @@ void SceneManager::ThreadStart1()
 	scenes.push_back(new HS05_Dialogue());
 	scene->AddLoadVal(); 
 
-	scene->AddLoadLevel();
 
 	scenes.push_back(new HS06_Chapter02());
 	scene->AddLoadVal();
@@ -186,6 +165,7 @@ void SceneManager::ThreadStart1()
 	scenes.push_back(new HS11_Chapter06());
 	scene->AddLoadVal();
 	
+
 	scenes.push_back(new HS12_HeavenScene());
 	scene->AddLoadVal();
 	
@@ -206,18 +186,41 @@ void SceneManager::ThreadStart1()
 	
 	scenes.push_back(new HS19_MapEditor());
 	scene->AddLoadVal();
-	
 
+	scene->AddLoadLevel();
 	scene->AddLoadLevel();
 }
 
 void SceneManager::ThreadStart2()
 {
-	CreateObject();
-
-	scenes.push_back(new HS02_Prologue());
+	{
+		Helltaker* helltaker = new Helltaker();
+		OBJMANAGER->AddObject("Helltaker", helltaker);
+	}
+	
+	for (int i = 1; i < 32; i++)
+	{
+		string str = "Trap" + to_string(i);
+		if (!OBJMANAGER->FindObject(str))
+		{
+			Trap* trap = new Trap();
+			OBJMANAGER->AddObject(str, trap);
+		}
+	}
+	
+	for (int i = 0; i < 12; i++)
+	{
+		string str = "ChainVH" + to_string(i);
+		if (!OBJMANAGER->FindObject(str))
+		{
+			ChainVH* ch = new ChainVH();
+			OBJMANAGER->AddObject(str, ch);
+		}
+	}
+	
+	scenes.push_back(new HS00_DeadScene());
 	scenes.push_back(new HS03_ChangeScene());
-	scenes.push_back(new HS04_Chapter01());
+	scenes.push_back(new HS17_BossScene());
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -260,6 +263,14 @@ void SceneManager::CreateObject()
 
 	ADDSOUND("TRAP", "./Sound/Trap1.wav", false);
 
+	ADDSOUND("CHAINBREAK", "./Sound/ChainBreak.wav", false);
+	ADDSOUND("CHAINKICK_L", "./Sound/ChainKickLeft.wav", false);
+	ADDSOUND("CHAINKICK_R", "./Sound/ChainKickRight.wav", false);
+	ADDSOUND("CHAINBLINK1", "./Sound/ChainBlink1.wav", false);
+	ADDSOUND("CHAINBLINK2", "./Sound/ChainBlink2.wav", false);
+	ADDSOUND("CHAINBLINK3", "./Sound/ChainBlink3.wav", false);
+	ADDSOUND("CHAINBLINK4", "./Sound/ChainBlink4.wav", false);
+	
 	ADDSOUND("DSTART", "./Sound/Dialogue Start.wav", false);
 	ADDSOUND("DSUCCESS", "./Sound/Dialogue Success.wav", false);
 	ADDSOUND("BADEND", "./Sound/BADEND.wav", false);
@@ -272,7 +283,33 @@ void SceneManager::CreateObject()
 	ADDSOUND("INTRO", "./Sound/IntroBGM.wav", true);
 	ADDSOUND("MAINBGM", "./Sound/HTBGM.wav", true);
 
-	TRNMANAGER->GetInstance();
+	{
+		Helltaker* helltaker = new Helltaker();
+		OBJMANAGER->AddObject("Helltaker", helltaker);
+	}
+
+
+	scene->AddLoadLevel();
+
+	for (int i = 0; i < 12; i++)
+	{
+		string str = "ChainVH" + to_string(i);
+		if (!OBJMANAGER->FindObject(str))
+		{
+			ChainVH* ch = new ChainVH();
+			OBJMANAGER->AddObject(str, ch);
+		}
+	}
+
+	for (int i = 1; i < 32; i++)
+	{
+		string str = "Trap" + to_string(i);
+		if (!OBJMANAGER->FindObject(str))
+		{
+			Trap* trap = new Trap();
+			OBJMANAGER->AddObject(str, trap);
+		}
+	}
 
 	// Booper
 	{
@@ -280,7 +317,6 @@ void SceneManager::CreateObject()
 		OBJMANAGER->AddObject("Booper", obj);
 	}
 
-	scene->AddLoadLevel();
 
 	// Helltaker
 	{

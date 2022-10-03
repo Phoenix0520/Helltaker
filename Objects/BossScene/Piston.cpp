@@ -218,6 +218,9 @@ void Piston::Render()
 
 void Piston::Reset()
 {
+	chain->SetMove(false);
+	chain->SetMoveVal(0.0f);
+
 	uprPiston[0]->SetPlay(0);
 	uprPiston[0]->SetPlay(0);
 

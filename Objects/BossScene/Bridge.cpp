@@ -98,4 +98,6 @@ void Bridge::Render()
 
 void Bridge::Reset()
 {
+	move = false;
+	moveVal = 0.0f;
 }
