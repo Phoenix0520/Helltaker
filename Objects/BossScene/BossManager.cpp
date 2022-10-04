@@ -2,6 +2,7 @@
 #include "BossManager.h"
 #include "HS17_BossScene.h"
 #include "ChainVH.h"
+#include "ChainDaigonal.h"
 #include "Helltaker.h"
 
 BossManager::BossManager()
@@ -34,10 +35,8 @@ void BossManager::Update(Matrix V, Matrix P)
 		{
 			for (UINT j = 0; j < activated[push].size(); j++)
 			{
-				cout << activated[push][j] << " ";
 				chains[activated[push][j]]->Reset();
 			}
-			cout << "번째 체인 호출" << endl;
 			reset = true;
 		}
 		if (end > push)
@@ -52,6 +51,8 @@ void BossManager::Update(Matrix V, Matrix P)
 	{
 		times[push] -= DELTA;
 	}
+	
+	HS17_BossScene* scene = (HS17_BossScene*)SCENEMANAGER->GetScene("HS17_BossScene");
 
 	for (UINT i = 0; i < activated[push].size(); i++)
 	{
@@ -62,14 +63,15 @@ void BossManager::Update(Matrix V, Matrix P)
 
 		if (chains[index]->IsAttacking())
 		{
-			if (Collider::InterSect(chains[index]->GetCollider(), ht->GetCollider()))
+			if (!attack)
 			{
-				if (!attack)
+				if (Collider::InterSect(ht->GetCollider(), chains[index]->GetCollider()))
 				{
-					HS17_BossScene* scene = (HS17_BossScene*)SCENEMANAGER->GetScene("HS17_BossScene");
+					if (!ht->GetImmune())
+						scene->DiscardLife();
 
-					//if (!ht->GetImmune())
-						//scene->DiscardLife();
+					cout << index << " 번째 체인에 피격당함!" << endl;
+
 					attack = true;
 				}
 			}
@@ -93,7 +95,14 @@ void BossManager::Reset()
 	push = 0;
 	end = 0;
 	attack = false;
+
+	//for (UINT i = 0; i < 12; i++)
+	//	chains[i]->SetActive(false);
+
+	for (UINT i = 0; i < activated.size(); i++)
+		activated[i].clear();
 	activated.clear();
+
 	activated.resize(200);
 	times.clear();
 }
@@ -108,7 +117,6 @@ void BossManager::PushChain(int type, int value, float time)
 
 			if ((value & comp) == comp)
 			{
-				cout << i << " ";
 				activated[end].push_back(i);
 			}
 		}
@@ -121,7 +129,6 @@ void BossManager::PushChain(int type, int value, float time)
 
 			if ((value & comp) == comp)
 			{
-				cout << i + 7 << " ";
 				activated[end].push_back(i + 7);
 			}
 		}
@@ -132,6 +139,5 @@ void BossManager::PushChain(int type, int value, float time)
 	{
 		end++;
 		times.push_back(time);
-		cout << endl;
 	}
 }

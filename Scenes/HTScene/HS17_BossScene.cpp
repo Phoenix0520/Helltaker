@@ -7,6 +7,7 @@
 #include "Bridge.h"
 #include "Trap.h"
 #include "ChainVH.h"
+#include "ChainDaigonal.h"
 #include "BossManager.h"
 
 HS17_BossScene::HS17_BossScene()
@@ -56,25 +57,24 @@ HS17_BossScene::HS17_BossScene()
 	gear[1]->SetPosition(770.0f, -420.0f);
 	gear[1]->SetPlay(0);
 
-	piston[0] = new Piston(-790.0f, endTime);
-	piston[1] = new Piston(790.0f, endTime);
+	piston[0] = new Piston(-790.0f, endTime + 0.25f);
+	piston[1] = new Piston(790.0f, endTime + 0.25f);
 	piston[1]->SetRotation(0.0f, 180.0f, 0.0f);
 
 	lifeCount = new LifeCount();
 
 	bridge = new Bridge();
 
-	manager = new BossManager();
-	//chainVH = new ChainVH();
+	chain = new ChainDaigonal();
 
-	//SetActive(false);
+	SetActive(false);
 	SetDisplay(false);
 
 	sceneName = "HS17_BossScene";
 
 	helltaker = (Helltaker*)OBJMANAGER->FindObject("Helltaker");
 
-	ChangeScene();
+	//ChangeScene();
 }
 
 HS17_BossScene::~HS17_BossScene()
@@ -138,11 +138,13 @@ void HS17_BossScene::Update()
 		working = true;
 		bridge->SetMove(true);
 	}
-	if (time >= endTime - 1.25f)
+	if (time >= endTime - 1.1f)
 	{
 		working = false;
 		bridge->SetMove(false);
 	}
+	if (time > endTime)
+		chain->Reset();
 
 	bridge->Update(V, P);
 
@@ -150,8 +152,8 @@ void HS17_BossScene::Update()
 
 	if (pPos.y > 180.0f || pPos.y < -320.0f)
 	{
-		//while (!lifeCount->IsDead())
-			//lifeCount->DiscardLife();
+		while (!lifeCount->IsDead())
+			lifeCount->DiscardLife();
 	}
 
 	if (working)
@@ -184,7 +186,8 @@ void HS17_BossScene::Update()
 
 	//for (UINT i = 0; i < 12; i++)
 		//ChainAttacking(i);
-	manager->Update(V, P);
+	chain->Update(V, P);
+	BOSSMANAGER->Update(V, P);
 }
 
 void HS17_BossScene::Render()
@@ -213,7 +216,8 @@ void HS17_BossScene::Render()
 	lifeCount->Render();
 
 	helltaker->Render();
-	manager->Render();
+	chain->Render();
+	BOSSMANAGER->Render();
 	//chainVH->Render();
 }
 
@@ -261,8 +265,9 @@ void HS17_BossScene::ChangeScene()
 		x += 100.0f;
 	}
 
-	manager->Reset();
+	BOSSMANAGER->Reset();
 	SetPhase();
+	chain->SetActive(false);
 	//chainVH->SetActive(true);
 }
 
@@ -296,7 +301,7 @@ void HS17_BossScene::MoveingTrap()
 		}
 
 		{
-			pos.y += bridge->GetMoveVal();
+			pos.y += piston[0]->GetMoveVal();
 			traps[i]->SetPosition(pos);
 		}
 
@@ -335,75 +340,63 @@ void HS17_BossScene::MoveingTrap()
 
 void HS17_BossScene::SetPhase()
 {
-	manager->PushChain(0, 0x0000000, 3.0f);
+	BOSSMANAGER->PushChain(0, 0x0000000, 2.5f);
 
-	manager->PushChain(0, 0x0001000, 0.0f);
-	manager->PushChain(1, 0x00100, 1.25f);
-	manager->PushChain(0, 0x0010100, 0.0f);
-	manager->PushChain(1, 0x01010, 1.25f);
-	manager->PushChain(0, 0x1000001, 0.0f);
-	manager->PushChain(1, 0x10001, 1.25f);
+	BOSSMANAGER->PushChain(0, 0x0001000, 0.0f);
+	BOSSMANAGER->PushChain(1, 0x00100, 1.25f);
+	BOSSMANAGER->PushChain(0, 0x0010100, 0.0f);
+	BOSSMANAGER->PushChain(1, 0x01010, 1.25f);
+	BOSSMANAGER->PushChain(0, 0x1000001, 0.0f);
+	BOSSMANAGER->PushChain(1, 0x10001, 1.25f);
 
-	manager->PushChain(0, 0x1001000, 0.0f);
-	manager->PushChain(1, 0x01000, 1.25f);
-	manager->PushChain(0, 0x0100100, 0.0f);
-	manager->PushChain(1, 0x00010, 1.25f);
-	manager->PushChain(0, 0x0001001, 0.0f);
-	manager->PushChain(1, 0x01000, 1.25f);
+	BOSSMANAGER->PushChain(0, 0x1001000, 0.0f);
+	BOSSMANAGER->PushChain(1, 0x01000, 1.25f);
+	BOSSMANAGER->PushChain(0, 0x0100100, 0.0f);
+	BOSSMANAGER->PushChain(1, 0x00010, 1.25f);
+	BOSSMANAGER->PushChain(0, 0x0001001, 0.0f);
+	BOSSMANAGER->PushChain(1, 0x01000, 1.25f);
 
-	manager->PushChain(0, 0x1000001, 0.75f);
-	manager->PushChain(0, 0x0100010, 0.75f);
-	manager->PushChain(0, 0x0010100, 0.75f);
-	manager->PushChain(0, 0x0001000, 0.75f);
-	manager->PushChain(0, 0x0010100, 0.75f);
-	manager->PushChain(0, 0x0100010, 0.75f);
-	manager->PushChain(0, 0x1000001, 1.5f);
+	BOSSMANAGER->PushChain(0, 0x1000001, 0.75f);
+	BOSSMANAGER->PushChain(0, 0x0100010, 0.75f);
+	BOSSMANAGER->PushChain(0, 0x0010100, 0.75f);
+	BOSSMANAGER->PushChain(0, 0x0001000, 0.75f);
+	BOSSMANAGER->PushChain(0, 0x0010100, 0.75f);
+	BOSSMANAGER->PushChain(0, 0x0100010, 0.75f);
+	BOSSMANAGER->PushChain(0, 0x1000001, 1.5f);
 
-	manager->PushChain(0, 0x1000001, 0.75f);
-	manager->PushChain(0, 0x0100010, 0.75f);
-	manager->PushChain(0, 0x0010100, 0.75f);
-	manager->PushChain(0, 0x0001000, 0.75f);
+	BOSSMANAGER->PushChain(0, 0x1000001, 0.75f);
+	BOSSMANAGER->PushChain(0, 0x0100010, 0.75f);
+	BOSSMANAGER->PushChain(0, 0x0010100, 0.75f);
+	BOSSMANAGER->PushChain(0, 0x0001000, 0.75f);
 
-	manager->PushChain(0, 0x1000001, 0.0f);
-	manager->PushChain(1, 0x10001, 1.0f);
-	manager->PushChain(0, 0x0100010, 0.0f);
-	manager->PushChain(1, 0x010010, 1.0f);
-	manager->PushChain(0, 0x0001000, 0.0f);
-	manager->PushChain(1, 0x00100, 1.25f);
+	BOSSMANAGER->PushChain(0, 0x1000001, 0.0f);
+	BOSSMANAGER->PushChain(1, 0x10001, 1.25f);
+	BOSSMANAGER->PushChain(0, 0x0100010, 0.0f);
+	BOSSMANAGER->PushChain(1, 0x010010, 1.25f);
+	BOSSMANAGER->PushChain(0, 0x0001000, 0.0f);
+	BOSSMANAGER->PushChain(1, 0x00100, 1.25f);
 
-	manager->PushChain(0, 0x0010100, 0.0f);
-	manager->PushChain(1, 0x10001, 1.0f);
-	manager->PushChain(0, 0x0001000, 0.0f);
-	manager->PushChain(1, 0x01010, 1.0f);
-	manager->PushChain(0, 0x0011100, 1.25f);
+	BOSSMANAGER->PushChain(0, 0x0010100, 0.0f);
+	BOSSMANAGER->PushChain(1, 0x10001, 1.25f);
+	BOSSMANAGER->PushChain(0, 0x0001000, 0.0f);
+	BOSSMANAGER->PushChain(1, 0x01010, 1.25f);
+	BOSSMANAGER->PushChain(0, 0x0011100, 1.25f);
 
-	manager->PushChain(0, 0x1000001, 0.0f);
-	manager->PushChain(1, 0x10001, 1.0f);
-	manager->PushChain(0, 0x1100011, 0.0f);
-	manager->PushChain(1, 0x00100, 1.0f);
-	manager->PushChain(0, 0x1110111, 2.0f);
+	BOSSMANAGER->PushChain(0, 0x1000001, 0.0f);
+	BOSSMANAGER->PushChain(1, 0x10001, 1.0f);
+	BOSSMANAGER->PushChain(0, 0x1100011, 0.0f);
+	BOSSMANAGER->PushChain(1, 0x00100, 1.0f);
+	BOSSMANAGER->PushChain(0, 0x1110111, 2.0f);
 
 	for (UINT i = 0; i < 10; i++)
 	{
-		manager->PushChain(0, 0x1000001, 1.35f);
-		manager->PushChain(1, 0x10001, 1.35f);
-		manager->PushChain(0, 0x0100010, 0.0f);
-		manager->PushChain(1, 0x10010, 1.35f);
-		manager->PushChain(0, 0x0010100, 0.0f);
-		manager->PushChain(1, 0x01001, 1.35f);
+		BOSSMANAGER->PushChain(0, 0x1000001, 1.35f);
+		BOSSMANAGER->PushChain(1, 0x10001, 1.35f);
+		BOSSMANAGER->PushChain(0, 0x0100010, 0.0f);
+		BOSSMANAGER->PushChain(1, 0x10010, 1.35f);
+		BOSSMANAGER->PushChain(0, 0x0010100, 0.0f);
+		BOSSMANAGER->PushChain(1, 0x01001, 1.35f);
 	}
-
-	//cout << "Phase 4 Start!" << endl;
-	//PushChain(0, 0x1010101);
-	//PushChain(0, 0x0101010);
-	//PushChain(1, 0x01010);
-	//PushChain(1, 0x10101);
-}
-
-void HS17_BossScene::PushChain(int type, int val)
-{
-	//chainVH->PushChain(push, type, val);
-	//push++;
 }
 
 void HS17_BossScene::DiscardLife()
@@ -414,39 +407,7 @@ void HS17_BossScene::DiscardLife()
 		lifeCount->DiscardLife();
 }
 
-//void HS17_BossScene::Activate(float time)
-//{
-//	if (time > ctime)
-//	{
-//		ctime += DELTA;
-//		return;
-//	}
-//	else if (ctime < 777.7f)
-//	{
-//		cout << "Activate!" << endl;
-//
-//		for (UINT i = 0; i < chainWork.size(); i++)
-//		{
-//			if (chainWork[i])
-//			{
-//				chainVH->SetPosByID(i);
-//				chainVH->Reset();
-//			}
-//		}
-//
-//		ctime = 777.7f;
-//	}
-//}
-
-//void HS17_BossScene::ChainAttacking(int index)
-//{
-//	if (Collider::InterSect(helltaker->GetCollider(), chainVH->GetCollider()))
-//	{
-//		if (chainVH->IsAttacking(index) && !attacked)
-//		{
-//			lifeCount->DiscardLife();
-//			helltaker->Attacked();
-//			attacked = true;
-//		}
-//	}
-//}
+void HS17_BossScene::AttackChain(int index)
+{
+	chain->Attack(index);
+}

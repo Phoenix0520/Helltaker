@@ -126,6 +126,7 @@ typedef D3DXMATRIX	Matrix;
 #include "Camera.h"
 #include "SceneManager.h"
 #include "ObjectManager.h"
+#include "BossManager.h"
 #include "SRVManager.h"
 #include "GameObject.h"
 #include "Collider.h"
@@ -146,7 +147,7 @@ typedef D3DXMATRIX	Matrix;
 #define TIMEMANAGER				GameTime::GetInstance()
 #define OBJMANAGER				ObjectManager::GetInstance()
 #define SRVMANAGER				SRVManager::GetInstance()
-#define TRNMANAGER				Terrain::GetInstance()
+#define BOSSMANAGER				BossManager::GetInstance()
 #define	CAMERA					Camera::GetInstance()
 #define KEYBOARD				Keyboard::GetInstance()
 #define DOWN(key)				KEYBOARD->Down(key)

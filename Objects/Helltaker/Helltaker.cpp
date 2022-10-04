@@ -616,6 +616,7 @@ void Helltaker::Reset()
 
 void Helltaker::BossUpdate(Matrix V, Matrix P)
 {
+	HS17_BossScene* scene = (HS17_BossScene*)SCENEMANAGER->GetScene("HS17_BossScene");
 	Vector2 pos = GetPosition();
 
 	if (state != State::WALK)
@@ -645,6 +646,19 @@ void Helltaker::BossUpdate(Matrix V, Matrix P)
 				dustEffect->SetPosition(position);
 				dustEffect->SetActive(true);
 			}
+			else
+			{
+				if (pos.y > 100.0f)
+				{
+					scene->AttackChain(0);
+				}
+				else if (pos.y < -200.0f)
+				{
+					scene->AttackChain(1);
+				}
+
+				state = State::ATTACK;
+			}
 		}
 		else if (DOWN('D') || DOWN(VK_RIGHT))
 		{
@@ -655,6 +669,19 @@ void Helltaker::BossUpdate(Matrix V, Matrix P)
 				state = State::WALK;
 				dustEffect->SetPosition(position);
 				dustEffect->SetActive(true);
+			}
+			else
+			{
+				if (pos.y > 100.0f)
+				{
+					scene->AttackChain(2);
+				}
+				else if (pos.y < -200.0f)
+				{
+					scene->AttackChain(3);
+				}
+
+				state = State::ATTACK;
 			}
 		}
 	}
@@ -688,13 +715,28 @@ void Helltaker::BossUpdate(Matrix V, Matrix P)
 		}
 	}
 
+	if (state == State::ATTACK)
+	{
+		if (!kickEffect->IsPlay())
+			kickEffect->SetActive(false);
+
+		if (!animation->IsPlay())
+		{
+			kickEffect->SetActive(false);
+			state = State::IDLE;
+		}
+	}
+
 	SetPosition(pos);
 
 	//cout << position.x << " , " << position.y << endl;
+	animation->SetPlay(state);
 	animation->SetPosition(position);
 	animation->SetRotation(rotation);
 	animation->Update(V, P);
 
+	kickEffect->SetScale(2.0f, 2.0f);
+	kickEffect->Update(V, P);
 	dustEffect->Update(V, P);
 
 	if (hugeEffect->IsActive())
@@ -710,6 +752,7 @@ void Helltaker::BossUpdate(Matrix V, Matrix P)
 	}
 	else
 		animation->UpdateColorBuffer(Color(), 0, 0.0f, 0.0f, 0.0f);
+
 	hugeEffect->Update(V, P);
 
 	collider->SetPosition(position);
@@ -741,6 +784,7 @@ void Helltaker::BossRender()
 	animation->Render();
 	hugeEffect->Render();
 	dustEffect->Render();
+	kickEffect->Render();
 	collider->Render();
 }
 

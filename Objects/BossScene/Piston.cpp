@@ -246,3 +246,8 @@ void Piston::Reset()
 		hirSkull->SetPosition(x + 100.0f, -170.0f);
 	}
 }
+
+float Piston::GetMoveVal()
+{
+	return chain->GetMoveVal();
+}

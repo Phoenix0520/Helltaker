@@ -62,50 +62,50 @@ void Collider::Render()
 
 bool Collider::InterSect(Collider * A, Collider * B)
 {
-	Vector2 sizeA = A->GetScale() / 2;
-	float leftA = A->GetPosition().x - sizeA.x;
-	float rightA = A->GetPosition().x + sizeA.x;
-	float topA = A->GetPosition().y + sizeA.y;
-	float bottomA = A->GetPosition().y - sizeA.y;
-
-	Vector2 sizeB = B->GetScale() / 2;
-	float leftB = B->GetPosition().x - sizeB.x;
-	float rightB = B->GetPosition().x + sizeB.x;
-	float topB = B->GetPosition().y + sizeB.y;
-	float bottomB = B->GetPosition().y - sizeB.y;
-
-	if (leftA > rightB || rightA < leftB)
-		return false;
-	if (topA < bottomB || bottomA > topB)
-		return false;
-
-	return true;
-
-	//Matrix world1 = A->GetWorld();
-	//Matrix world2 = B->GetWorld();
+	//Vector2 sizeA = A->GetScale() / 2;
+	//float leftA = A->GetPosition().x - sizeA.x;
+	//float rightA = A->GetPosition().x + sizeA.x;
+	//float topA = A->GetPosition().y + sizeA.y;
+	//float bottomA = A->GetPosition().y - sizeA.y;
 	//
-	//float halfWidth = fabs(world1._11 *0.5f);
-	//float halfHeight = fabs(world1._22 *0.5f);
-	//float leftA = world1._41 - halfWidth;
-	//float rightA = world1._41 + halfWidth;
-	//float topA = world1._42 + halfHeight;
-	//float bottomA = world1._42 - halfHeight;
+	//Vector2 sizeB = B->GetScale() / 2;
+	//float leftB = B->GetPosition().x - sizeB.x;
+	//float rightB = B->GetPosition().x + sizeB.x;
+	//float topB = B->GetPosition().y + sizeB.y;
+	//float bottomB = B->GetPosition().y - sizeB.y;
 	//
-	//halfWidth = fabs(world2._11 *0.5f);
-	//halfHeight = fabs(world2._22 *0.5f);
-	//
-	//float leftB = world2._41 - halfWidth;
-	//float rightB = world2._41 + halfWidth;
-	//float topB = world2._42 + halfHeight;
-	//float bottomB = world2._42 - halfHeight;
-	//
-	//// 충돌 Check
-	//if (rightA < leftB || leftA > rightB)
+	//if (leftA > rightB || rightA < leftB)
 	//	return false;
 	//if (topA < bottomB || bottomA > topB)
 	//	return false;
 	//
 	//return true;
+
+	Matrix world1 = A->GetWorld();
+	Matrix world2 = B->GetWorld();
+	
+	float halfWidth = fabs(world1._11 *0.5f);
+	float halfHeight = fabs(world1._22 *0.5f);
+	float leftA = world1._41 - halfWidth;
+	float rightA = world1._41 + halfWidth;
+	float topA = world1._42 + halfHeight;
+	float bottomA = world1._42 - halfHeight;
+	
+	halfWidth = fabs(world2._11 *0.5f);
+	halfHeight = fabs(world2._22 *0.5f);
+	
+	float leftB = world2._41 - halfWidth;
+	float rightB = world2._41 + halfWidth;
+	float topB = world2._42 + halfHeight;
+	float bottomB = world2._42 - halfHeight;
+	
+	// 충돌 Check
+	if (rightA < leftB || leftA > rightB)
+		return false;
+	if (topA < bottomB || bottomA > topB)
+		return false;
+	
+	return true;
 }
 
 void Collider::CreateBuffer()

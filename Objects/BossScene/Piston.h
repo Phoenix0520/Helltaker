@@ -10,6 +10,7 @@ public:
 	void Update(Matrix V, Matrix P);
 	void Render();
 	void Reset();
+	float GetMoveVal();
 
 private:
 	class Animation* uprPiston[2];

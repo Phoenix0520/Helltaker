@@ -53,7 +53,17 @@ void ChainVH::Update(Matrix V, Matrix P)
 		texture->SetScale(scale);
 
 		if (!soundPlayed)
-			PLAYSOUND("CHAINBLINK" + to_string(generator()), sfxSize);
+		{
+			string str = "CHAINBLINK1";// +to_string(generator());
+
+			if (!ISPLAYING(str))
+				PLAYSOUND(str, sfxSize); 
+		}
+
+		collider->SetPosition(texture->GetPosition());
+		collider->SetRotation(texture->GetRotation());
+		collider->SetScale(texture->GetTextureRealSize());
+		collider->Update(V, P);
 
 		attacking = true;
 		soundPlayed = true;
@@ -66,11 +76,6 @@ void ChainVH::Update(Matrix V, Matrix P)
 	}
 
 	texture->Update(V, P);
-	
-	collider->SetPosition(texture->GetPosition());
-	collider->SetRotation(texture->GetRotation());
-	collider->SetScale(texture->GetTextureRealSize());
-	collider->Update(V, P);
 }
 
 void ChainVH::Render()
@@ -79,13 +84,13 @@ void ChainVH::Render()
 		return;
 
 	texture->Render();
-	collider->Render();
+
+	if (time >= 0.5f && time < 0.8f)
+		collider->Render();
 }
 
 void ChainVH::Reset()
 {
-	cout << "Reset!" << endl;
-
 	SetScale(0.75f, 0.75f);
 	time = 0.0f;
 	attacking = false;
@@ -105,6 +110,4 @@ void ChainVH::SetPosByID(int id)
 		texture->SetPosition(0.0f, (id - 10) * 100.0f);
 		texture->SetRotation(0.0f, 0.0f, 90.0f);
 	}
-
-	cout << id << " ¹øÂ° Pos : " << texture->GetPosition().x << " , " << texture->GetPosition().y << endl;
 }

@@ -10,9 +10,17 @@ public:
 	void Render() override;
 	void Reset() override;
 
-private:
-	vector<UINT> hp;
+	void Attack(int index);
 
-	class Texture* texture = nullptr;
+private:
+	vector<class Texture*> texture;
+	vector<UINT> hp;
+	class Texture* broken = nullptr;
+	class Texture* hpBorder = nullptr;
+	class Texture* hpBar = nullptr;
+
+	float time = 0.0f;
+	float ctime = 0.0f;
+
 
 };

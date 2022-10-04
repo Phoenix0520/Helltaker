@@ -1,10 +1,17 @@
 #pragma once
 
-class BossManager : public GameObject
+class BossManager
 {
 public:
 	BossManager();
 	~BossManager();
+
+public:
+	static BossManager* GetInstance()
+	{
+		static BossManager instance;
+		return &instance;
+	}
 
 public:
 	void Update(Matrix V, Matrix P);

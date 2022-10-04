@@ -14,10 +14,8 @@ public:
 	void MoveingTrap();
 	void SetPhase();
 
-	void PushChain(int type, int val);
-	//void Activate(float time);
-	//void ChainAttacking(int index);
 	void DiscardLife();
+	void AttackChain(int index);
 
 private:
 	class Texture* background	= nullptr;
@@ -34,8 +32,7 @@ private:
 	
 	vector<class Trap*> traps;
 
-	class ChainVH* chainVH = nullptr;
-	class BossManager* manager = nullptr;
+	class ChainDaigonal* chain = nullptr;
 	//vector<bool> chainWork;
 	//vector<bool> timeRemain;
 	

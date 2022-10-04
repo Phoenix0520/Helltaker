@@ -222,9 +222,6 @@ HS16_JudgeScene::~HS16_JudgeScene()
 
 void HS16_JudgeScene::Update()
 {
-	if (ISPLAYING("MAINBGM"))
-		STOPSOUND("MAINBGM");
-
 	CAMERA->Update();
 	Matrix V = CAMERA->GetViewMatrix();
 	Matrix P = CAMERA->GetProjMatrix();
@@ -299,14 +296,14 @@ void HS16_JudgeScene::Update()
 			background[5]->UpdateColorBuffer(Color(2.0f / 255.0f, 2.0f / 255.0f, 27.0f / 255.0f, 1.0f), 4, 0, 0, 0);
 		}
 
-		timer += DELTA;
+		timer += DELTA * 1.25f;
 		
 		if (timer >= 4.5f)
 		{
 			if (cplus)
-				ctime += DELTA * 0.35f;
+				ctime += DELTA * 0.45f;
 			else
-				ctime -= DELTA * 0.35f;
+				ctime -= DELTA * 0.45f;
 
 			if (ctime >= 1.0f)
 				cplus = false;
@@ -360,11 +357,11 @@ void HS16_JudgeScene::Update()
 			}
 			else if (timer >= 2.45f && timer < 2.95f)
 			{
-				val2 = timer * 1.25f;
+				val2 = timer * 1.35f;
 			}
 			else if (timer >= 3.75f && timer < 4.75f)
 			{
-				val1 = timer * 1.0f;
+				val1 = timer * 1.1f;
 				val2 = -timer * 8.25f;
 			}
 
