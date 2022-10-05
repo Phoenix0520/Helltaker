@@ -288,6 +288,11 @@ void SceneManager::CreateObject()
 		OBJMANAGER->AddObject("Helltaker", helltaker);
 	}
 
+	// Booper
+	{
+		Booper* obj = new Booper();
+		OBJMANAGER->AddObject("Booper", obj);
+	}
 
 	scene->AddLoadLevel();
 
@@ -311,11 +316,6 @@ void SceneManager::CreateObject()
 		}
 	}
 
-	// Booper
-	{
-		Booper* obj = new Booper();
-		OBJMANAGER->AddObject("Booper", obj);
-	}
 
 
 	// Helltaker
